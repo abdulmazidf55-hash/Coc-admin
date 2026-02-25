@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Cloud of Core (Real-time Update)</title>
+    <title>Admin - Cloud of Core Trading Control</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -11,38 +11,64 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { 
-            background: linear-gradient(135deg, #0a0f1e, #1a2639); 
-            color: white; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0f1e, #1a2639);
+            color: white;
             padding: 30px;
             min-height: 100vh;
         }
+        
         .admin-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
+        
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 20px 30px;
             background: rgba(30, 41, 59, 0.9);
-            border-radius: 15px;
-            border: 1px solid cyan;
-            box-shadow: 0 0 30px rgba(0,255,255,0.2);
+            border-radius: 20px;
+            border: 2px solid cyan;
+            box-shadow: 0 0 40px rgba(0,255,255,0.3);
         }
+        
         h1 {
             color: cyan;
             text-shadow: 0 0 20px cyan;
-            font-size: 2rem;
+            font-size: 2.2rem;
         }
+        
+        .live-badge {
+            background: #00ff00;
+            color: #0a0f1e;
+            padding: 5px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 15px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
         .logout-btn {
             background: transparent;
             border: 2px solid cyan;
             color: cyan;
-            padding: 10px 25px;
+            padding: 10px 30px;
             border-radius: 30px;
             cursor: pointer;
             font-size: 1rem;
@@ -53,37 +79,42 @@
             color: #0a0f1e;
             box-shadow: 0 0 30px cyan;
         }
+        
         .section {
             background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 15px;
+            padding: 30px;
+            border-radius: 20px;
             margin-bottom: 30px;
-            border: 1px solid cyan;
-            box-shadow: 0 0 20px rgba(0,255,255,0.1);
+            border: 2px solid cyan;
         }
+        
         .section h2 {
             color: cyan;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            border-bottom: 1px solid cyan;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid cyan;
             padding-bottom: 10px;
         }
+        
         .input-group {
             margin-bottom: 20px;
         }
+        
         label {
             display: block;
             color: cyan;
             margin-bottom: 8px;
             font-weight: bold;
+            font-size: 1.1rem;
         }
-        input, textarea {
+        
+        input, textarea, select {
             width: 100%;
-            padding: 12px;
+            padding: 12px 15px;
             background: #0f172a;
-            border: 1px solid #00ffff33;
-            border-radius: 8px;
+            border: 2px solid #00ffff33;
+            border-radius: 10px;
             color: white;
             font-size: 1rem;
             transition: 0.3s;
@@ -91,26 +122,35 @@
         input:focus, textarea:focus {
             outline: none;
             border-color: cyan;
-            box-shadow: 0 0 20px cyan;
+            box-shadow: 0 0 30px cyan;
         }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
         .student-card {
             background: #1e293b;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-bottom: 20px;
-            border-left: 4px solid cyan;
+            border-left: 5px solid cyan;
         }
-        .student-card h3 {
-            color: cyan;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
+        
         .save-btn {
             background: cyan;
             color: #0a0f1e;
             border: none;
             padding: 15px 40px;
-            border-radius: 30px;
+            border-radius: 40px;
             font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
@@ -119,89 +159,90 @@
             margin-top: 20px;
         }
         .save-btn:hover {
-            box-shadow: 0 0 40px cyan;
+            box-shadow: 0 0 50px cyan;
             transform: scale(1.02);
         }
-        .live-badge {
-            background: #00ff00;
-            color: #0a0f1e;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-left: 10px;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        
         .preview-box {
             background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            border: 1px dashed cyan;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 2px dashed cyan;
         }
-        .preview-box small {
-            color: cyan;
-            display: block;
-            margin-bottom: 5px;
+        
+        .rank-item-admin {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .rank-item-admin input {
+            flex: 1;
         }
     </style>
 </head>
 <body>
     <div class="admin-container" id="admin-panel" style="display: none;">
         <div class="header">
-            <h1><i class="fas fa-crown" style="color: cyan;"></i> Admin Control Panel <span class="live-badge">🔴 LIVE Real-time Update</span></h1>
-            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <h1>
+                <i class="fas fa-crown" style="color: cyan;"></i> 
+                TRADING CONTROL PANEL 
+                <span class="live-badge">🔴 REAL-TIME</span>
+            </h1>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> EXIT</button>
         </div>
 
-        <!-- Total Students Update Section -->
+        <!-- Batch Statistics Control -->
         <div class="section">
-            <h2><i class="fas fa-users"></i> Total Students Counter (Real-time)</h2>
-            <div class="input-group">
-                <label>Enter Total Students Text:</label>
-                <input type="text" id="total-students-input" placeholder="e.g., 2026 Total Students: 1852" value="2026 Total Students: 1852">
-                <div class="preview-box">
-                    <small>👁️ Live Preview (যা ইউজার দেখবে):</small>
-                    <p style="color: cyan; font-size: 1.2rem;" id="live-preview">2026 Total Students: 1852</p>
-                </div>
+            <h2><i class="fas fa-chart-line"></i> Batch Trading Statistics (Real-time)</h2>
+            <div class="grid-2" id="batch-stats-admin">
+                <!-- Dynamically populated -->
             </div>
-            <button class="save-btn" onclick="updateTotalStudents()">
-                <i class="fas fa-sync-alt"></i> আপডেট করলেই ইউজার সাইটে Instant Change দেখাবে
+            <button class="save-btn" onclick="saveBatchStats()">
+                <i class="fas fa-sync-alt"></i> Update Batch Stats (Instant)
             </button>
         </div>
 
-        <!-- 305 Batch Students Update Section -->
+        <!-- Top 10 Ranking Control -->
         <div class="section">
-            <h2><i class="fas fa-user-graduate"></i> 305 Batch Students Info (Real-time Update)</h2>
-            <p style="color: #aaa; margin-bottom: 20px;">⚠️ নিচের তথ্য পরিবর্তন করলেই ইউজার সাইটে সাথে সাথে আপডেট হবে</p>
-            
-            <div id="students-container"></div>
-            
-            <button class="save-btn" onclick="saveAllStudents()">
-                <i class="fas fa-cloud-upload-alt"></i> সব স্টুডেন্ট তথ্য আপডেট করুন (Real-time)
+            <h2><i class="fas fa-trophy"></i> Top 10 Traders Ranking</h2>
+            <div id="ranking-admin"></div>
+            <button class="save-btn" onclick="saveRanking()">
+                <i class="fas fa-crown"></i> Update Ranking (Real-time)
             </button>
         </div>
 
-        <!-- Real-time Status -->
-        <div class="section" style="text-align: center;">
-            <h2><i class="fas fa-bolt"></i> Real-time Connection Status</h2>
-            <p style="color: #00ff00; font-size: 1.2rem;">
-                <i class="fas fa-circle"></i> Firebase Connected - Live Updates Active
-            </p>
-            <p style="color: cyan;">অ্যাডমিন প্যানেল থেকে যেকোনো পরিবর্তন ইউজার সাইটে Instant দেখাবে</p>
+        <!-- Notice Control -->
+        <div class="section">
+            <h2><i class="fas fa-fire"></i> Live Notice (Fire Animation)</h2>
+            <textarea id="notice-input" rows="4" placeholder="Enter notice with 🔥 animation..."></textarea>
+            <div class="preview-box">
+                <small>👁️ Live Preview:</small>
+                <div style="color: cyan; font-size: 1.2rem; margin-top: 10px;" id="notice-preview"></div>
+            </div>
+            <button class="save-btn" onclick="saveNotice()">
+                <i class="fas fa-bolt"></i> Update Notice (Instant)
+            </button>
+        </div>
+
+        <!-- 305 Batch Students Control -->
+        <div class="section">
+            <h2><i class="fas fa-user-graduate"></i> 305 Batch Students (Premium)</h2>
+            <div id="students-container"></div>
+            <button class="save-btn" onclick="saveAllStudents()">
+                <i class="fas fa-cloud-upload-alt"></i> Update All Students
+            </button>
         </div>
     </div>
 
-    <!-- Admin Login Section -->
+    <!-- Login -->
     <div id="admin-login" style="max-width: 400px; margin: 100px auto; background: rgba(30,41,59,0.9); padding: 40px; border-radius: 20px; border: 2px solid cyan;">
-        <h2 style="color: cyan; text-align: center; margin-bottom: 30px;"><i class="fas fa-lock"></i> Admin Login</h2>
-        <input type="email" id="admin-email" placeholder="📧 Admin Email" style="width:100%; padding:12px; margin:10px 0; background:#0f172a; border:1px solid cyan; color:white; border-radius:8px;">
+        <h2 style="color: cyan; text-align: center; margin-bottom: 30px;">🔐 ADMIN LOGIN</h2>
+        <input type="email" id="admin-email" placeholder="📧 Email" style="width:100%; padding:12px; margin:10px 0; background:#0f172a; border:1px solid cyan; color:white; border-radius:8px;">
         <input type="password" id="admin-password" placeholder="🔑 Password" style="width:100%; padding:12px; margin:10px 0; background:#0f172a; border:1px solid cyan; color:white; border-radius:8px;">
-        <button onclick="adminLogin()" style="width:100%; padding:12px; background:cyan; color:#0a0f1e; border:none; border-radius:30px; font-weight:bold; cursor:pointer; margin-top:20px;">
-            <i class="fas fa-sign-in-alt"></i> Login to Admin Panel
+        <button onclick="adminLogin()" style="width:100%; padding:12px; background:cyan; color:#0a0f1e; border:none; border-radius:30px; font-weight:bold; cursor:pointer;">
+            Login to Control Panel
         </button>
     </div>
 
@@ -222,7 +263,6 @@
 
         const studentNames = ['majedul islam fahad', 'sayid hossain sayem', 'abu talha shamim', 'kamrul hassan sojib'];
 
-        // Admin Login
         function adminLogin() {
             const email = document.getElementById('admin-email').value;
             const password = document.getElementById('admin-password').value;
@@ -231,12 +271,10 @@
                     document.getElementById('admin-login').style.display = 'none';
                     document.getElementById('admin-panel').style.display = 'block';
                     loadAdminData();
-                    setupRealTimePreview(); // Real-time preview setup
                 })
                 .catch(err => alert('Login failed: ' + err.message));
         }
 
-        // Logout
         function logout() {
             auth.signOut().then(() => {
                 document.getElementById('admin-panel').style.display = 'none';
@@ -244,56 +282,54 @@
             });
         }
 
-        // Load existing data
         function loadAdminData() {
-            // Load total students
-            db.collection('settings').doc('general').get().then(doc => {
+            // Load batch stats
+            loadBatchStatsAdmin();
+            
+            // Load ranking
+            loadRankingAdmin();
+            
+            // Load notice
+            db.collection('notices').doc('latest').get().then(doc => {
                 if (doc.exists) {
-                    document.getElementById('total-students-input').value = doc.data().totalStudents || '2026 Total Students: 1852';
-                    document.getElementById('live-preview').innerText = doc.data().totalStudents || '2026 Total Students: 1852';
+                    document.getElementById('notice-input').value = doc.data().content;
+                    document.getElementById('notice-preview').innerHTML = doc.data().content;
                 }
             });
 
-            // Load students data
+            // Load students
             const container = document.getElementById('students-container');
             container.innerHTML = '';
             studentNames.forEach(name => {
                 const div = document.createElement('div');
                 div.className = 'student-card';
                 div.innerHTML = `
-                    <h3>${name.toUpperCase()}</h3>
-                    <div style="display: grid; gap: 15px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <h3 style="color: cyan;">${name.toUpperCase()}</h3>
+                    <div class="grid-3">
                         <div>
-                            <label>📊 Class Points:</label>
-                            <input type="number" id="${name}-classPoints" value="0" onchange="previewUpdate('${name}')">
+                            <label>Class Points:</label>
+                            <input type="number" id="${name}-classPoints" value="0">
                         </div>
                         <div>
-                            <label>📈 Total Points:</label>
-                            <input type="number" id="${name}-totalPoints" value="0" onchange="previewUpdate('${name}')">
+                            <label>Total Points:</label>
+                            <input type="number" id="${name}-totalPoints" value="0">
                         </div>
                         <div>
-                            <label>📝 Exam Marks:</label>
-                            <input type="number" id="${name}-examMarks" value="0" onchange="previewUpdate('${name}')">
+                            <label>Exam Marks:</label>
+                            <input type="number" id="${name}-examMarks" value="0">
                         </div>
                         <div>
-                            <label>🎯 Total Marks:</label>
-                            <input type="number" id="${name}-totalMarks" value="0" onchange="previewUpdate('${name}')">
+                            <label>Total Marks:</label>
+                            <input type="number" id="${name}-totalMarks" value="0">
                         </div>
                     </div>
                     <div style="margin-top: 15px;">
-                        <label>📋 Notice/Reports:</label>
-                        <textarea id="${name}-notice" rows="2" onchange="previewUpdate('${name}')">No notices</textarea>
-                    </div>
-                    <div class="preview-box" style="margin-top: 15px;" id="${name}-preview">
-                        <small>👁️ Real-time Preview (যা ইউজার দেখবে):</small>
-                        <p>Class Points: <span id="${name}-preview-class">0</span> | Total Points: <span id="${name}-preview-total">0</span></p>
-                        <p>Exam Marks: <span id="${name}-preview-exam">0</span> | Total Marks: <span id="${name}-preview-totalmarks">0</span></p>
-                        <p>Notice: <span id="${name}-preview-notice">No notices</span></p>
+                        <label>Notice:</label>
+                        <textarea id="${name}-notice" rows="2">No notices</textarea>
                     </div>
                 `;
                 container.appendChild(div);
 
-                // Load existing data
                 db.collection('students').doc(name).get().then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
@@ -302,39 +338,112 @@
                         document.getElementById(`${name}-examMarks`).value = data.examMarks || 0;
                         document.getElementById(`${name}-totalMarks`).value = data.totalMarks || 0;
                         document.getElementById(`${name}-notice`).value = data.notice || 'No notices';
-                        previewUpdate(name);
                     }
                 });
             });
         }
 
-        // Preview update function
-        function previewUpdate(name) {
-            document.getElementById(`${name}-preview-class`).innerText = document.getElementById(`${name}-classPoints`).value;
-            document.getElementById(`${name}-preview-total`).innerText = document.getElementById(`${name}-totalPoints`).value;
-            document.getElementById(`${name}-preview-exam`).innerText = document.getElementById(`${name}-examMarks`).value;
-            document.getElementById(`${name}-preview-totalmarks`).innerText = document.getElementById(`${name}-totalMarks`).value;
-            document.getElementById(`${name}-preview-notice`).innerText = document.getElementById(`${name}-notice`).value;
-        }
-
-        // Real-time preview for total students
-        function setupRealTimePreview() {
-            document.getElementById('total-students-input').addEventListener('input', function(e) {
-                document.getElementById('live-preview').innerText = e.target.value;
+        function loadBatchStatsAdmin() {
+            const container = document.getElementById('batch-stats-admin');
+            const batches = ['301', '302', '303', '304', '305'];
+            let html = '';
+            
+            batches.forEach(batch => {
+                html += `
+                    <div style="background: #1e293b; padding: 20px; border-radius: 10px;">
+                        <h3 style="color: cyan;">Batch ${batch}</h3>
+                        <input type="text" id="batch-${batch}-value" placeholder="Value (e.g., 1,245)" class="batch-input">
+                        <select id="batch-${batch}-trend" style="width:100%; padding:10px; margin-top:10px;">
+                            <option value="up">📈 Trending Up</option>
+                            <option value="down">📉 Trending Down</option>
+                        </select>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Load existing data
+            db.collection('batchStats').get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    document.getElementById(`batch-${data.batch}-value`).value = data.value;
+                    document.getElementById(`batch-${data.batch}-trend`).value = data.trend;
+                });
             });
         }
 
-        // Update total students (Real-time)
-        function updateTotalStudents() {
-            const val = document.getElementById('total-students-input').value;
-            db.collection('settings').doc('general').set({ totalStudents: val })
-                .then(() => {
-                    alert('✅ Total students updated! ইউজার সাইটে Instant change দেখাবে (রিফ্রেশ লাগবে না)');
-                })
-                .catch(err => alert(err.message));
+        function saveBatchStats() {
+            const batches = ['301', '302', '303', '304', '305'];
+            const batch = db.batch();
+            
+            batches.forEach(b => {
+                const value = document.getElementById(`batch-${b}-value`).value;
+                const trend = document.getElementById(`batch-${b}-trend`).value;
+                const ref = db.collection('batchStats').doc(b);
+                batch.set(ref, { batch: b, value, trend });
+            });
+            
+            batch.commit().then(() => {
+                alert('✅ Batch stats updated! Real-time update হবে ইউজার সাইটে');
+            });
         }
 
-        // Save all students (Real-time)
+        function loadRankingAdmin() {
+            const container = document.getElementById('ranking-admin');
+            let html = '<div class="grid-2">';
+            
+            for (let i = 1; i <= 10; i++) {
+                html += `
+                    <div style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                        <label>#${i} Trader Name:</label>
+                        <input type="text" id="rank-${i}-name" placeholder="Enter name" style="margin-bottom: 5px;">
+                        <label>Points:</label>
+                        <input type="number" id="rank-${i}-points" placeholder="Points">
+                    </div>
+                `;
+            }
+            html += '</div>';
+            container.innerHTML = html;
+            
+            // Load existing ranking
+            db.collection('ranking').orderBy('points', 'desc').limit(10).get().then(snapshot => {
+                let i = 1;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    document.getElementById(`rank-${i}-name`).value = data.name;
+                    document.getElementById(`rank-${i}-points`).value = data.points;
+                    i++;
+                });
+            });
+        }
+
+        function saveRanking() {
+            const batch = db.batch();
+            
+            for (let i = 1; i <= 10; i++) {
+                const name = document.getElementById(`rank-${i}-name`).value;
+                const points = parseInt(document.getElementById(`rank-${i}-points`).value) || 0;
+                
+                if (name) {
+                    const ref = db.collection('ranking').doc(`rank-${i}`);
+                    batch.set(ref, { name, points });
+                }
+            }
+            
+            batch.commit().then(() => {
+                alert('✅ Ranking updated! Real-time update হবে ইউজার সাইটে');
+            });
+        }
+
+        function saveNotice() {
+            const content = document.getElementById('notice-input').value;
+            db.collection('notices').doc('latest').set({ content })
+                .then(() => {
+                    alert('✅ Notice updated! Fire animation সহ ইউজার সাইটে দেখাবে');
+                });
+        }
+
         function saveAllStudents() {
             const batch = db.batch();
             studentNames.forEach(name => {
@@ -350,17 +459,20 @@
             });
             
             batch.commit().then(() => {
-                alert('✅ All students updated! ইউজার সাইটে Real-time update হবে (কোনো রিফ্রেশ লাগবে না)');
-            }).catch(err => alert(err.message));
+                alert('✅ All students updated!');
+            });
         }
 
-        // Auto-login check
+        // Notice preview
+        document.getElementById('notice-input')?.addEventListener('input', function(e) {
+            document.getElementById('notice-preview').innerHTML = e.target.value;
+        });
+
         auth.onAuthStateChanged(user => {
             if (user) {
                 document.getElementById('admin-login').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
                 loadAdminData();
-                setupRealTimePreview();
             } else {
                 document.getElementById('admin-panel').style.display = 'none';
                 document.getElementById('admin-login').style.display = 'block';

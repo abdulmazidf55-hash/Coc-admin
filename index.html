@@ -21,12 +21,12 @@
         body {
             background: linear-gradient(135deg, #0a0f1e, #1a2639);
             color: white;
-            padding: 30px;
+            padding: 20px;
             min-height: 100vh;
         }
         
         .admin-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
@@ -40,12 +40,14 @@
             border-radius: 20px;
             border: 2px solid cyan;
             box-shadow: 0 0 40px rgba(0,255,255,0.3);
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         h1 {
             color: cyan;
             text-shadow: 0 0 20px cyan;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
         }
         
         .live-badge {
@@ -83,7 +85,7 @@
         .section {
             background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(10px);
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
             margin-bottom: 30px;
             border: 2px solid cyan;
@@ -92,7 +94,7 @@
         .section h2 {
             color: cyan;
             margin-bottom: 25px;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             border-bottom: 2px solid cyan;
             padding-bottom: 10px;
         }
@@ -106,6 +108,12 @@
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
         
@@ -124,18 +132,20 @@
             color: cyan;
             margin-bottom: 5px;
             font-weight: bold;
+            font-size: 0.9rem;
         }
         
         input, textarea, select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background: #0f172a;
             border: 1px solid #00ffff33;
-            border-radius: 8px;
+            border-radius: 10px;
             color: white;
+            font-size: 0.95rem;
         }
         
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: cyan;
             box-shadow: 0 0 20px cyan;
@@ -147,7 +157,7 @@
             border: none;
             padding: 15px 40px;
             border-radius: 40px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
@@ -181,6 +191,52 @@
             border-radius: 10px;
             margin-bottom: 10px;
         }
+
+        .trending-card-admin {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid cyan;
+            margin-bottom: 15px;
+        }
+
+        .trending-preview {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .preview-card {
+            min-width: 200px;
+            background: linear-gradient(165deg, #1a2639, #0f172a);
+            border-radius: 15px;
+            padding: 15px;
+            border: 2px solid cyan;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid cyan;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4, .grid-5 {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -197,7 +253,12 @@
         <!-- Total Students Count -->
         <div class="section">
             <h2><i class="fas fa-users"></i> Total Students Counter</h2>
-            <input type="text" id="total-students-input" placeholder="e.g., 2026 Total Students: 1852">
+            <div class="grid-2">
+                <div>
+                    <label>Total Students Display</label>
+                    <input type="text" id="total-students-input" placeholder="e.g., 2026 Total Students: 1852">
+                </div>
+            </div>
             <button class="save-btn" onclick="updateTotalStudents()">Update Total Students</button>
         </div>
 
@@ -210,11 +271,13 @@
             <button class="save-btn" onclick="saveBatchStats()">Update Batch Stats</button>
         </div>
 
-        <!-- Top 10 Ranking Control -->
+        <!-- TRENDING 15 CONTROL -->
         <div class="section">
-            <h2><i class="fas fa-trophy"></i> Top 10 Students Ranking</h2>
-            <div id="ranking-admin" class="grid-2"></div>
-            <button class="save-btn" onclick="saveRanking()">Update Ranking</button>
+            <h2><i class="fas fa-fire"></i> Trending 15 Students Control</h2>
+            <div class="trending-preview" id="trending-preview"></div>
+            <div id="trending-admin-container"></div>
+            <button class="save-btn" onclick="addTrendingField()">➕ Add New Trending Student</button>
+            <button class="save-btn" onclick="saveAllTrending()" style="background: #00ff88;">💾 Save All Trending Data</button>
         </div>
 
         <!-- Notice Control -->
@@ -249,8 +312,7 @@
             projectId: "cloudofcore-e7554",
             storageBucket: "cloudofcore-e7554.firebasestorage.app",
             messagingSenderId: "965527739763",
-            appId: "1:965527739763:web:c451eb823bc4daa6007906",
-            measurementId: "G-BGETFS0LSL"
+            appId: "1:965527739763:web:c451eb823bc4daa6007906"
         };
         
         firebase.initializeApp(firebaseConfig);
@@ -258,6 +320,7 @@
         const db = firebase.firestore();
 
         const studentNames = ['majedul islam fahad', 'sayid hossain sayem', 'abu talha shamim', 'kamrul hassan sojib'];
+        let trendingCount = 15;
 
         function adminLogin() {
             const email = document.getElementById('admin-email').value;
@@ -289,8 +352,8 @@
             // Load batch stats
             loadBatchStatsAdmin();
             
-            // Load ranking
-            loadRankingAdmin();
+            // Load trending data
+            loadTrendingAdmin();
             
             // Load notice
             db.collection('notices').doc('latest').get().then(doc => {
@@ -312,7 +375,7 @@
                 html += `
                     <div style="background: #1e293b; padding: 15px; border-radius: 10px;">
                         <h3 style="color: cyan; margin-bottom: 10px;">Batch ${batch}</h3>
-                        <input type="text" id="batch-${batch}-value" placeholder="Value" style="margin-bottom: 5px;">
+                        <input type="text" id="batch-${batch}-value" placeholder="Value (e.g., 12.4K)" style="margin-bottom: 5px;">
                         <select id="batch-${batch}-trend">
                             <option value="up">📈 Up</option>
                             <option value="down">📉 Down</option>
@@ -334,31 +397,114 @@
             });
         }
 
-        function loadRankingAdmin() {
-            const container = document.getElementById('ranking-admin');
-            let html = '';
+        function loadTrendingAdmin() {
+            const container = document.getElementById('trending-admin-container');
+            let html = '<div class="grid-4">';
             
-            for (let i = 1; i <= 10; i++) {
+            for (let i = 1; i <= 15; i++) {
                 html += `
-                    <div class="rank-item-admin">
-                        <h4 style="color: cyan;">#${i}</h4>
-                        <input type="text" id="rank-${i}-name" placeholder="Student Name" style="margin-bottom: 5px;">
-                        <input type="number" id="rank-${i}-points" placeholder="Points">
+                    <div class="trending-card-admin">
+                        <h3 style="color: cyan; margin-bottom: 10px;">#${i}</h3>
+                        <div class="input-group">
+                            <label>Student Name</label>
+                            <input type="text" id="trending-${i}-name" placeholder="Name">
+                        </div>
+                        <div class="input-group">
+                            <label>Batch</label>
+                            <select id="trending-${i}-batch">
+                                <option value="301">301</option>
+                                <option value="302">302</option>
+                                <option value="303">303</option>
+                                <option value="304">304</option>
+                                <option value="305">305</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Points</label>
+                            <input type="number" id="trending-${i}-points" placeholder="Points">
+                        </div>
+                        <div class="input-group">
+                            <label>Rating (0-5)</label>
+                            <input type="number" id="trending-${i}-rating" step="0.1" min="0" max="5" placeholder="4.9">
+                        </div>
+                        <div class="input-group">
+                            <label>Image URL</label>
+                            <input type="url" id="trending-${i}-image" placeholder="https://...">
+                        </div>
                     </div>
                 `;
             }
             
+            html += '</div>';
             container.innerHTML = html;
             
-            db.collection('ranking').orderBy('points', 'desc').limit(10).get().then(snapshot => {
-                let i = 1;
+            db.collection('trending').orderBy('rank', 'asc').limit(15).get().then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data();
-                    document.getElementById(`rank-${i}-name`).value = data.name;
-                    document.getElementById(`rank-${i}-points`).value = data.points;
-                    i++;
+                    const rank = data.rank;
+                    document.getElementById(`trending-${rank}-name`).value = data.name || '';
+                    document.getElementById(`trending-${rank}-batch`).value = data.batch || '301';
+                    document.getElementById(`trending-${rank}-points`).value = data.points || '';
+                    document.getElementById(`trending-${rank}-rating`).value = data.rating || '';
+                    document.getElementById(`trending-${rank}-image`).value = data.image || '';
                 });
             });
+            
+            updateTrendingPreview();
+        }
+
+        function updateTrendingPreview() {
+            const preview = document.getElementById('trending-preview');
+            let html = '';
+            
+            for (let i = 1; i <= 5; i++) {
+                const name = document.getElementById(`trending-${i}-name`)?.value || `Student ${i}`;
+                const image = document.getElementById(`trending-${i}-image`)?.value || 'https://via.placeholder.com/200x120/1a2639/00ffff?text=Preview';
+                
+                html += `
+                    <div class="preview-card">
+                        <img src="${image}" class="preview-image" onerror="this.src='https://via.placeholder.com/200x120/1a2639/00ffff?text=No+Image'">
+                        <div style="color: cyan; margin-top: 10px; font-weight: bold;">#${i} ${name.substring(0,15)}</div>
+                    </div>
+                `;
+            }
+            
+            preview.innerHTML = html;
+        }
+
+        function addTrendingField() {
+            trendingCount++;
+            // This function can be used if you want to add more than 15
+            alert('Maximum 15 trending students allowed');
+        }
+
+        function saveAllTrending() {
+            const batch = db.batch();
+            
+            for (let i = 1; i <= 15; i++) {
+                const name = document.getElementById(`trending-${i}-name`).value;
+                const batchNum = document.getElementById(`trending-${i}-batch`).value;
+                const points = parseInt(document.getElementById(`trending-${i}-points`).value) || 0;
+                const rating = parseFloat(document.getElementById(`trending-${i}-rating`).value) || 0;
+                const image = document.getElementById(`trending-${i}-image`).value || 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Student';
+                
+                if (name) {
+                    const ref = db.collection('trending').doc(`rank-${i}`);
+                    batch.set(ref, {
+                        rank: i,
+                        name: name,
+                        batch: batchNum,
+                        points: points,
+                        rating: rating,
+                        image: image
+                    });
+                }
+            }
+            
+            batch.commit().then(() => {
+                alert('All trending data saved successfully!');
+                updateTrendingPreview();
+            }).catch(err => alert('Error: ' + err.message));
         }
 
         function loadStudentsAdmin() {
@@ -369,8 +515,8 @@
                 const div = document.createElement('div');
                 div.className = 'student-card';
                 div.innerHTML = `
-                    <h3 style="color: cyan;">${name.toUpperCase()}</h3>
-                    <div class="grid-3">
+                    <h3 style="color: cyan; margin-bottom: 15px;">${name.toUpperCase()}</h3>
+                    <div class="grid-4">
                         <div>
                             <label>Class Points:</label>
                             <input type="number" id="${name}-classPoints">
@@ -430,22 +576,6 @@
             batch.commit().then(() => alert('Batch stats updated!'));
         }
 
-        function saveRanking() {
-            const batch = db.batch();
-            
-            for (let i = 1; i <= 10; i++) {
-                const name = document.getElementById(`rank-${i}-name`).value;
-                const points = parseInt(document.getElementById(`rank-${i}-points`).value) || 0;
-                
-                if (name) {
-                    const ref = db.collection('ranking').doc(`rank-${i}`);
-                    batch.set(ref, { name, points });
-                }
-            }
-            
-            batch.commit().then(() => alert('Ranking updated!'));
-        }
-
         function saveNotice() {
             const content = document.getElementById('notice-input').value;
             db.collection('notices').doc('latest').set({ content })
@@ -469,6 +599,9 @@
             
             batch.commit().then(() => alert('All students updated!'));
         }
+
+        // Auto-update preview when inputs change
+        setInterval(updateTrendingPreview, 2000);
 
         auth.onAuthStateChanged(user => {
             if (user) {

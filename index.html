@@ -21,7 +21,7 @@
         body {
             background: linear-gradient(135deg, #0a0f1e, #1a2639);
             color: white;
-            padding: 20px;
+            padding: 30px;
             min-height: 100vh;
         }
         
@@ -40,14 +40,12 @@
             border-radius: 20px;
             border: 2px solid cyan;
             box-shadow: 0 0 40px rgba(0,255,255,0.3);
-            flex-wrap: wrap;
-            gap: 15px;
         }
         
         h1 {
             color: cyan;
             text-shadow: 0 0 20px cyan;
-            font-size: 1.8rem;
+            font-size: 2.2rem;
         }
         
         .live-badge {
@@ -85,7 +83,7 @@
         .section {
             background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(10px);
-            padding: 25px;
+            padding: 30px;
             border-radius: 20px;
             margin-bottom: 30px;
             border: 2px solid cyan;
@@ -94,7 +92,7 @@
         .section h2 {
             color: cyan;
             margin-bottom: 25px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             border-bottom: 2px solid cyan;
             padding-bottom: 10px;
         }
@@ -111,21 +109,15 @@
             gap: 20px;
         }
         
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        
         .grid-5 {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 15px;
         }
-
-        .grid-6 {
+        
+        .grid-10 {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
         }
         
@@ -138,20 +130,18 @@
             color: cyan;
             margin-bottom: 5px;
             font-weight: bold;
-            font-size: 0.9rem;
         }
         
         input, textarea, select {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: #0f172a;
             border: 1px solid #00ffff33;
-            border-radius: 10px;
+            border-radius: 8px;
             color: white;
-            font-size: 0.95rem;
         }
         
-        input:focus, textarea:focus, select:focus {
+        input:focus, textarea:focus {
             outline: none;
             border-color: cyan;
             box-shadow: 0 0 20px cyan;
@@ -163,7 +153,7 @@
             border: none;
             padding: 15px 40px;
             border-radius: 40px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
@@ -174,22 +164,15 @@
             box-shadow: 0 0 50px cyan;
             transform: scale(1.02);
         }
-
-        .secondary-btn {
-            background: transparent;
-            border: 2px solid cyan;
+        
+        .small-btn {
+            background: #00ffff33;
+            border: 1px solid cyan;
             color: cyan;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: 0.3s;
-            margin-right: 10px;
-        }
-        .secondary-btn:hover {
-            background: cyan;
-            color: #0a0f1e;
+            margin-top: 5px;
         }
         
         .preview-box {
@@ -214,93 +197,37 @@
             border-radius: 10px;
             margin-bottom: 10px;
         }
-
-        .trending-card-admin {
+        
+        .leadership-admin-card {
             background: #1e293b;
             padding: 20px;
             border-radius: 15px;
-            border: 1px solid cyan;
-            margin-bottom: 15px;
-        }
-
-        .trending-preview {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding: 20px 0;
-            margin-bottom: 20px;
-        }
-
-        .preview-card {
-            min-width: 200px;
-            background: linear-gradient(165deg, #1a2639, #0f172a);
-            border-radius: 15px;
-            padding: 15px;
             border: 2px solid cyan;
         }
-
-        .preview-image {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid cyan;
+        
+        .leadership-admin-card.batch-305-highlight {
+            border: 4px solid #00ff88;
+            background: linear-gradient(145deg, #1a4731, #0a2f1f);
         }
-
-        .tab-buttons {
+        
+        .badge-preview {
             display: flex;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 20px;
+            margin: 15px 0;
+            padding: 10px;
+            background: #0f172a;
+            border-radius: 10px;
         }
-
-        .tab-btn {
-            padding: 12px 25px;
-            background: transparent;
-            border: 2px solid cyan;
-            color: cyan;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .tab-btn.active {
-            background: cyan;
-            color: #0a0f1e;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2, .grid-3, .grid-4, .grid-5, .grid-6 {
-                grid-template-columns: 1fr;
-            }
-            
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            h1 {
-                font-size: 1.4rem;
-            }
-            
-            .tab-buttons {
-                flex-wrap: wrap;
-            }
-            
-            .tab-btn {
-                flex: 1;
-                text-align: center;
-                padding: 10px;
-                font-size: 0.9rem;
-            }
+        
+        .diamond-preview { color: #b9f2ff; font-size: 2rem; }
+        .gold-preview { color: #ffd700; font-size: 2rem; }
+        .silver-preview { color: #c0c0c0; font-size: 2rem; }
+        .bronze-preview { color: #cd7f32; font-size: 2rem; }
+        .standard-preview { color: #00ffff; font-size: 2rem; }
+        
+        .metric-input {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -318,12 +245,7 @@
         <!-- Total Students Count -->
         <div class="section">
             <h2><i class="fas fa-users"></i> Total Students Counter</h2>
-            <div class="grid-2">
-                <div>
-                    <label>Total Students Display</label>
-                    <input type="text" id="total-students-input" placeholder="e.g., 2026 Total Students: 1852">
-                </div>
-            </div>
+            <input type="text" id="total-students-input" placeholder="e.g., 1,852 Students">
             <button class="save-btn" onclick="updateTotalStudents()">Update Total Students</button>
         </div>
 
@@ -336,36 +258,24 @@
             <button class="save-btn" onclick="saveBatchStats()">Update Batch Stats</button>
         </div>
 
-        <!-- Top 10 Leaderboard + Trending 15 Tabs -->
+        <!-- Best Performance Batch Leadership Control -->
         <div class="section">
-            <h2><i class="fas fa-trophy"></i> Rankings Control</h2>
-            
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchTab('top10')">🏆 TOP 10 LEADERBOARD</button>
-                <button class="tab-btn" onclick="switchTab('trending15')">⭐ TRENDING 15</button>
+            <h2><i class="fas fa-gem"></i> Best Performance Batch Leadership</h2>
+            <p style="color: #aaa; margin-bottom: 20px;">
+                Rank 1: Diamond 💎 | Rank 2: Gold Crown 👑 | Rank 3: Silver Medal 🥈 | Rank 4: Bronze 🥉 | Rank 5: Star ⭐
+                <br>Batch 305 will always appear with green highlight
+            </p>
+            <div class="grid-5" id="leadership-admin">
+                <!-- Dynamically populated -->
             </div>
+            <button class="save-btn" onclick="saveLeadershipBoard()">Update Leadership Board</button>
+        </div>
 
-            <!-- TOP 10 Leaderboard Tab -->
-            <div id="top10-tab" class="tab-content active">
-                <div class="preview-box" style="margin-bottom: 20px;">
-                    <h3 style="color: cyan; margin-bottom: 10px;">Preview - Top 10 Leaderboard</h3>
-                    <div id="top10-preview" style="max-height: 200px; overflow-y: auto;">
-                        <!-- Preview will be shown here -->
-                    </div>
-                </div>
-                <div id="ranking-admin" class="grid-2"></div>
-                <button class="save-btn" onclick="saveRanking()">💾 Save Top 10 Leaderboard</button>
-            </div>
-
-            <!-- TRENDING 15 Tab -->
-            <div id="trending15-tab" class="tab-content">
-                <div class="trending-preview" id="trending-preview"></div>
-                <div id="trending-admin-container"></div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button class="secondary-btn" onclick="loadDefaultTrending()">📥 Load Default</button>
-                    <button class="save-btn" onclick="saveAllTrending()" style="width: auto;">💾 Save All Trending 15</button>
-                </div>
-            </div>
+        <!-- Top 10 Ranking Control -->
+        <div class="section">
+            <h2><i class="fas fa-trophy"></i> Top 10 Students Ranking</h2>
+            <div class="grid-10" id="ranking-admin" style="grid-template-columns: repeat(2, 1fr);"></div>
+            <button class="save-btn" onclick="saveRanking()">Update Ranking</button>
         </div>
 
         <!-- Notice Control -->
@@ -377,7 +287,7 @@
 
         <!-- 305 Batch Students Control -->
         <div class="section">
-            <h2><i class="fas fa-user-graduate"></i> 305 Batch Students</h2>
+            <h2><i class="fas fa-user-graduate"></i> 305 Batch Students (Class Points Based Ranking)</h2>
             <div id="students-container"></div>
             <button class="save-btn" onclick="saveAllStudents()">Update 305 Batch Students</button>
         </div>
@@ -400,7 +310,8 @@
             projectId: "cloudofcore-e7554",
             storageBucket: "cloudofcore-e7554.firebasestorage.app",
             messagingSenderId: "965527739763",
-            appId: "1:965527739763:web:c451eb823bc4daa6007906"
+            appId: "1:965527739763:web:c451eb823bc4daa6007906",
+            measurementId: "G-BGETFS0LSL"
         };
         
         firebase.initializeApp(firebaseConfig);
@@ -428,20 +339,6 @@
             });
         }
 
-        function switchTab(tab) {
-            // Update tab buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            if (tab === 'top10') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('top10-tab').classList.add('active');
-                document.getElementById('trending15-tab').classList.remove('active');
-            } else {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('trending15-tab').classList.add('active');
-                document.getElementById('top10-tab').classList.remove('active');
-            }
-        }
-
         function loadAdminData() {
             // Load total students
             db.collection('settings').doc('general').get().then(doc => {
@@ -453,11 +350,11 @@
             // Load batch stats
             loadBatchStatsAdmin();
             
-            // Load top 10 ranking
-            loadRankingAdmin();
+            // Load leadership board
+            loadLeadershipAdmin();
             
-            // Load trending data
-            loadTrendingAdmin();
+            // Load ranking
+            loadRankingAdmin();
             
             // Load notice
             db.collection('notices').doc('latest').get().then(doc => {
@@ -501,232 +398,116 @@
             });
         }
 
-        // TOP 10 LEADERBOARD FUNCTIONS
+        function loadLeadershipAdmin() {
+            const container = document.getElementById('leadership-admin');
+            const batches = ['301', '302', '303', '304', '305'];
+            let html = '';
+            
+            batches.forEach(batch => {
+                const isBatch305 = batch === '305';
+                html += `
+                    <div class="leadership-admin-card ${isBatch305 ? 'batch-305-highlight' : ''}" id="leadership-${batch}">
+                        <h3 style="color: cyan; margin-bottom: 15px;">Batch ${batch} ${isBatch305 ? '🌟' : ''}</h3>
+                        
+                        <div class="input-group">
+                            <label>Rank (1-5):</label>
+                            <input type="number" id="leadership-${batch}-rank" min="1" max="5" value="5" onchange="updateLeadershipPreview('${batch}')">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Value (Points):</label>
+                            <input type="text" id="leadership-${batch}-value" placeholder="e.g., 21.0K">
+                        </div>
+                        
+                        <div class="input-group metric-input">
+                            <label>Metric Label:</label>
+                            <input type="text" id="leadership-${batch}-metric" placeholder="e.g., Performance Score" value="Performance Score">
+                        </div>
+                        
+                        <div class="badge-preview" id="leadership-${batch}-preview">
+                            <span>Badge Preview:</span>
+                            <span id="leadership-${batch}-badge" class="standard-preview"><i class="fas fa-star"></i></span>
+                            <span id="leadership-${batch}-badge-text">Star (Rank 5)</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Load existing data
+            db.collection('batchLeadership').orderBy('rank', 'asc').get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const rankInput = document.getElementById(`leadership-${data.batch}-rank`);
+                    const valueInput = document.getElementById(`leadership-${data.batch}-value`);
+                    const metricInput = document.getElementById(`leadership-${data.batch}-metric`);
+                    
+                    if (rankInput) rankInput.value = data.rank;
+                    if (valueInput) valueInput.value = data.value;
+                    if (metricInput) metricInput.value = data.metric || 'Performance Score';
+                    
+                    updateLeadershipPreview(data.batch);
+                });
+            });
+        }
+
+        function updateLeadershipPreview(batch) {
+            const rank = parseInt(document.getElementById(`leadership-${batch}-rank`).value) || 5;
+            const badgeSpan = document.getElementById(`leadership-${batch}-badge`);
+            const textSpan = document.getElementById(`leadership-${batch}-badge-text`);
+            
+            // Remove all classes
+            badgeSpan.className = '';
+            
+            if (rank === 1) {
+                badgeSpan.innerHTML = '<i class="fas fa-gem"></i>';
+                badgeSpan.classList.add('diamond-preview');
+                textSpan.innerHTML = 'Diamond 💎 (Rank 1)';
+            } else if (rank === 2) {
+                badgeSpan.innerHTML = '<i class="fas fa-crown"></i>';
+                badgeSpan.classList.add('gold-preview');
+                textSpan.innerHTML = 'Gold Crown 👑 (Rank 2)';
+            } else if (rank === 3) {
+                badgeSpan.innerHTML = '<i class="fas fa-medal"></i>';
+                badgeSpan.classList.add('silver-preview');
+                textSpan.innerHTML = 'Silver Medal 🥈 (Rank 3)';
+            } else if (rank === 4) {
+                badgeSpan.innerHTML = '<i class="fas fa-award"></i>';
+                badgeSpan.classList.add('bronze-preview');
+                textSpan.innerHTML = 'Bronze 🥉 (Rank 4)';
+            } else {
+                badgeSpan.innerHTML = '<i class="fas fa-star"></i>';
+                badgeSpan.classList.add('standard-preview');
+                textSpan.innerHTML = 'Star ⭐ (Rank 5)';
+            }
+        }
+
         function loadRankingAdmin() {
             const container = document.getElementById('ranking-admin');
-            let html = '<div class="grid-2">';
+            let html = '';
             
             for (let i = 1; i <= 10; i++) {
                 html += `
                     <div class="rank-item-admin">
-                        <h4 style="color: cyan; margin-bottom: 10px;">
-                            ${i === 1 ? '👑' : i === 2 ? '🥈' : i === 3 ? '🥉' : '⭐'} Rank #${i}
-                        </h4>
-                        <div class="input-group">
-                            <label>Student Name</label>
-                            <input type="text" id="rank-${i}-name" placeholder="Enter student name">
-                        </div>
-                        <div class="input-group">
-                            <label>Points</label>
-                            <input type="number" id="rank-${i}-points" placeholder="Points">
-                        </div>
+                        <h4 style="color: cyan;">#${i}</h4>
+                        <input type="text" id="rank-${i}-name" placeholder="Student Name" style="margin-bottom: 5px;">
+                        <input type="number" id="rank-${i}-points" placeholder="Points">
                     </div>
                 `;
             }
             
-            html += '</div>';
             container.innerHTML = html;
             
             db.collection('ranking').orderBy('points', 'desc').limit(10).get().then(snapshot => {
                 let i = 1;
                 snapshot.forEach(doc => {
                     const data = doc.data();
-                    document.getElementById(`rank-${i}-name`).value = data.name || '';
-                    document.getElementById(`rank-${i}-points`).value = data.points || 0;
+                    document.getElementById(`rank-${i}-name`).value = data.name;
+                    document.getElementById(`rank-${i}-points`).value = data.points;
                     i++;
                 });
-            }).then(() => {
-                updateTop10Preview();
             });
-        }
-
-        function updateTop10Preview() {
-            const preview = document.getElementById('top10-preview');
-            let html = '';
-            
-            for (let i = 1; i <= 10; i++) {
-                const name = document.getElementById(`rank-${i}-name`)?.value || `Student ${i}`;
-                const points = document.getElementById(`rank-${i}-points`)?.value || 0;
-                
-                let badge = '';
-                if (i === 1) badge = '👑';
-                else if (i === 2) badge = '🥈';
-                else if (i === 3) badge = '🥉';
-                else badge = '⭐';
-                
-                html += `
-                    <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #334155;">
-                        <span><span style="color:cyan;">${badge} #${i}</span> ${name}</span>
-                        <span style="color:cyan; font-weight:bold;">${points}</span>
-                    </div>
-                `;
-            }
-            
-            preview.innerHTML = html || '<p style="color:#aaa;">No data yet</p>';
-        }
-
-        function saveRanking() {
-            const batch = db.batch();
-            
-            for (let i = 1; i <= 10; i++) {
-                const name = document.getElementById(`rank-${i}-name`).value;
-                const points = parseInt(document.getElementById(`rank-${i}-points`).value) || 0;
-                
-                if (name) {
-                    const ref = db.collection('ranking').doc(`rank-${i}`);
-                    batch.set(ref, { name, points });
-                }
-            }
-            
-            batch.commit().then(() => {
-                alert('Top 10 leaderboard updated successfully!');
-                updateTop10Preview();
-            }).catch(err => alert('Error: ' + err.message));
-        }
-
-        // TRENDING 15 FUNCTIONS
-        function loadTrendingAdmin() {
-            const container = document.getElementById('trending-admin-container');
-            let html = '<div class="grid-3">';
-            
-            for (let i = 1; i <= 15; i++) {
-                html += `
-                    <div class="trending-card-admin">
-                        <h3 style="color: cyan; margin-bottom: 10px;">⭐ #${i}</h3>
-                        <div class="input-group">
-                            <label>Student Name</label>
-                            <input type="text" id="trending-${i}-name" placeholder="Name">
-                        </div>
-                        <div class="input-group">
-                            <label>Batch</label>
-                            <select id="trending-${i}-batch">
-                                <option value="301">301</option>
-                                <option value="302">302</option>
-                                <option value="303">303</option>
-                                <option value="304">304</option>
-                                <option value="305">305</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label>Points</label>
-                            <input type="number" id="trending-${i}-points" placeholder="Points">
-                        </div>
-                        <div class="input-group">
-                            <label>Rating (0-5)</label>
-                            <input type="number" id="trending-${i}-rating" step="0.1" min="0" max="5" placeholder="4.9">
-                        </div>
-                        <div class="input-group">
-                            <label>Image URL</label>
-                            <input type="url" id="trending-${i}-image" placeholder="https://...">
-                        </div>
-                    </div>
-                `;
-            }
-            
-            html += '</div>';
-            container.innerHTML = html;
-            
-            db.collection('trending').orderBy('rank', 'asc').limit(15).get().then(snapshot => {
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const rank = data.rank;
-                    if (rank >= 1 && rank <= 15) {
-                        document.getElementById(`trending-${rank}-name`).value = data.name || '';
-                        document.getElementById(`trending-${rank}-batch`).value = data.batch || '301';
-                        document.getElementById(`trending-${rank}-points`).value = data.points || '';
-                        document.getElementById(`trending-${rank}-rating`).value = data.rating || '';
-                        document.getElementById(`trending-${rank}-image`).value = data.image || '';
-                    }
-                });
-            }).then(() => {
-                updateTrendingPreview();
-            });
-        }
-
-        function loadDefaultTrending() {
-            const defaultData = [
-                { rank: 1, name: 'James Anderson', batch: '301', points: 2850, rating: 4.9, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=James+A' },
-                { rank: 2, name: 'Mohammed Ahmed', batch: '302', points: 2720, rating: 4.8, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Mohammed+A' },
-                { rank: 3, name: 'Lucas Schmidt', batch: '303', points: 2680, rating: 4.8, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Lucas+S' },
-                { rank: 4, name: 'Carlos Garcia', batch: '304', points: 2550, rating: 4.7, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Carlos+G' },
-                { rank: 5, name: 'Majedul Fahad', batch: '305', points: 2450, rating: 4.7, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Majedul+F' },
-                { rank: 6, name: 'John Smith', batch: '301', points: 2380, rating: 4.6, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=John+S' },
-                { rank: 7, name: 'Ali Hassan', batch: '302', points: 2320, rating: 4.6, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Ali+H' },
-                { rank: 8, name: 'Oliver Brown', batch: '303', points: 2280, rating: 4.5, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Oliver+B' },
-                { rank: 9, name: 'Miguel Torres', batch: '304', points: 2210, rating: 4.5, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Miguel+T' },
-                { rank: 10, name: 'Sayid Sayem', batch: '305', points: 2150, rating: 4.4, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Sayid+S' },
-                { rank: 11, name: 'Robert Wilson', batch: '301', points: 2080, rating: 4.4, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Robert+W' },
-                { rank: 12, name: 'Omar Farooq', batch: '302', points: 2020, rating: 4.3, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Omar+F' },
-                { rank: 13, name: 'Elias Mueller', batch: '303', points: 1950, rating: 4.3, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Elias+M' },
-                { rank: 14, name: 'Diego Lopez', batch: '304', points: 1880, rating: 4.2, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Diego+L' },
-                { rank: 15, name: 'Abu Shamim', batch: '305', points: 1820, rating: 4.2, image: 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Abu+S' }
-            ];
-
-            for (let i = 1; i <= 15; i++) {
-                const data = defaultData[i-1];
-                document.getElementById(`trending-${i}-name`).value = data.name;
-                document.getElementById(`trending-${i}-batch`).value = data.batch;
-                document.getElementById(`trending-${i}-points`).value = data.points;
-                document.getElementById(`trending-${i}-rating`).value = data.rating;
-                document.getElementById(`trending-${i}-image`).value = data.image;
-            }
-            
-            updateTrendingPreview();
-            alert('Default trending data loaded! Click Save to store in database.');
-        }
-
-        function updateTrendingPreview() {
-            const preview = document.getElementById('trending-preview');
-            let html = '';
-            
-            for (let i = 1; i <= 5; i++) {
-                const name = document.getElementById(`trending-${i}-name`)?.value || `Student ${i}`;
-                const image = document.getElementById(`trending-${i}-image`)?.value || 'https://via.placeholder.com/200x120/1a2639/00ffff?text=Preview';
-                const batch = document.getElementById(`trending-${i}-batch`)?.value || '301';
-                const points = document.getElementById(`trending-${i}-points`)?.value || '0';
-                
-                html += `
-                    <div class="preview-card">
-                        <img src="${image}" class="preview-image" onerror="this.src='https://via.placeholder.com/200x120/1a2639/00ffff?text=No+Image'">
-                        <div style="color: cyan; margin-top: 10px; font-weight: bold;">#${i} ${name.substring(0,12)}</div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 5px; font-size: 0.8rem;">
-                            <span>Batch ${batch}</span>
-                            <span style="color:cyan;">${points}</span>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            preview.innerHTML = html || '<p style="color:#aaa;">No data yet</p>';
-        }
-
-        function saveAllTrending() {
-            const batch = db.batch();
-            
-            for (let i = 1; i <= 15; i++) {
-                const name = document.getElementById(`trending-${i}-name`).value;
-                const batchNum = document.getElementById(`trending-${i}-batch`).value;
-                const points = parseInt(document.getElementById(`trending-${i}-points`).value) || 0;
-                const rating = parseFloat(document.getElementById(`trending-${i}-rating`).value) || 0;
-                const image = document.getElementById(`trending-${i}-image`).value || 'https://via.placeholder.com/300x200/1a2639/00ffff?text=Student';
-                
-                if (name) {
-                    const ref = db.collection('trending').doc(`rank-${i}`);
-                    batch.set(ref, {
-                        rank: i,
-                        name: name,
-                        batch: batchNum,
-                        points: points,
-                        rating: rating,
-                        image: image
-                    });
-                }
-            }
-            
-            batch.commit().then(() => {
-                alert('All trending 15 data saved successfully!');
-                updateTrendingPreview();
-            }).catch(err => alert('Error: ' + err.message));
         }
 
         function loadStudentsAdmin() {
@@ -737,28 +518,28 @@
                 const div = document.createElement('div');
                 div.className = 'student-card';
                 div.innerHTML = `
-                    <h3 style="color: cyan; margin-bottom: 15px;">${name.toUpperCase()}</h3>
-                    <div class="grid-4">
+                    <h3 style="color: cyan;">${name.toUpperCase()}</h3>
+                    <div class="grid-3">
                         <div>
                             <label>Class Points:</label>
-                            <input type="number" id="${name}-classPoints">
+                            <input type="number" id="${name}-classPoints" value="94">
                         </div>
                         <div>
                             <label>Total Points:</label>
-                            <input type="number" id="${name}-totalPoints">
+                            <input type="number" id="${name}-totalPoints" value="486">
                         </div>
                         <div>
                             <label>Exam Marks:</label>
-                            <input type="number" id="${name}-examMarks">
+                            <input type="number" id="${name}-examMarks" value="89">
                         </div>
                         <div>
                             <label>Total Marks:</label>
-                            <input type="number" id="${name}-totalMarks">
+                            <input type="number" id="${name}-totalMarks" value="445">
                         </div>
                     </div>
                     <div style="margin-top: 15px;">
                         <label>Notice:</label>
-                        <textarea id="${name}-notice" rows="2"></textarea>
+                        <textarea id="${name}-notice" rows="2">🌟 Outstanding performance! Keep it up.</textarea>
                     </div>
                 `;
                 container.appendChild(div);
@@ -766,11 +547,11 @@
                 db.collection('students').doc(name).get().then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
-                        document.getElementById(`${name}-classPoints`).value = data.classPoints || 0;
-                        document.getElementById(`${name}-totalPoints`).value = data.totalPoints || 0;
-                        document.getElementById(`${name}-examMarks`).value = data.examMarks || 0;
-                        document.getElementById(`${name}-totalMarks`).value = data.totalMarks || 0;
-                        document.getElementById(`${name}-notice`).value = data.notice || '';
+                        document.getElementById(`${name}-classPoints`).value = data.classPoints || 94;
+                        document.getElementById(`${name}-totalPoints`).value = data.totalPoints || 486;
+                        document.getElementById(`${name}-examMarks`).value = data.examMarks || 89;
+                        document.getElementById(`${name}-totalMarks`).value = data.totalMarks || 445;
+                        document.getElementById(`${name}-notice`).value = data.notice || '🌟 Outstanding performance! Keep it up.';
                     }
                 });
             });
@@ -798,6 +579,54 @@
             batch.commit().then(() => alert('Batch stats updated!'));
         }
 
+        function saveLeadershipBoard() {
+            const batches = ['301', '302', '303', '304', '305'];
+            const batch = db.batch();
+            
+            // First, delete all existing leadership entries
+            db.collection('batchLeadership').get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    batch.delete(doc.ref);
+                });
+                
+                // Then add new ones
+                batches.forEach(b => {
+                    const rank = parseInt(document.getElementById(`leadership-${b}-rank`).value) || 5;
+                    const value = document.getElementById(`leadership-${b}-value`).value || '0';
+                    const metric = document.getElementById(`leadership-${b}-metric`).value || 'Performance Score';
+                    
+                    const ref = db.collection('batchLeadership').doc(b);
+                    batch.set(ref, { 
+                        batch: b, 
+                        rank: rank,
+                        value: value,
+                        metric: metric
+                    });
+                });
+                
+                batch.commit().then(() => {
+                    alert('Leadership board updated!');
+                    loadLeadershipAdmin();
+                });
+            });
+        }
+
+        function saveRanking() {
+            const batch = db.batch();
+            
+            for (let i = 1; i <= 10; i++) {
+                const name = document.getElementById(`rank-${i}-name`).value;
+                const points = parseInt(document.getElementById(`rank-${i}-points`).value) || 0;
+                
+                if (name) {
+                    const ref = db.collection('ranking').doc(`rank-${i}`);
+                    batch.set(ref, { name, points });
+                }
+            }
+            
+            batch.commit().then(() => alert('Ranking updated!'));
+        }
+
         function saveNotice() {
             const content = document.getElementById('notice-input').value;
             db.collection('notices').doc('latest').set({ content })
@@ -819,17 +648,12 @@
                 batch.set(ref, data);
             });
             
-            batch.commit().then(() => alert('All students updated!'));
+            batch.commit().then(() => {
+                alert('All students updated!');
+                // Trigger update in main website
+                db.collection('triggers').doc('update').set({ timestamp: Date.now() });
+            });
         }
-
-        // Auto-update preview when inputs change
-        setInterval(() => {
-            if (document.getElementById('top10-tab').classList.contains('active')) {
-                updateTop10Preview();
-            } else {
-                updateTrendingPreview();
-            }
-        }, 2000);
 
         auth.onAuthStateChanged(user => {
             if (user) {

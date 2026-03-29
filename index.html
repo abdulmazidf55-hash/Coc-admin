@@ -1,11 +1,10 @@
-<!-- ADMIN PANEL: cloudofcore-ac574 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Admin - Cloud of Core Control Panel</title>
-    <!-- Firebase SDK v10.8.0 with new config -->
+    <!-- Firebase SDK v10.8.0 -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -26,14 +25,12 @@
             padding: 15px;
         }
         
-        /* Responsive Container */
         .admin-container {
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
         }
         
-        /* Responsive Header */
         .header {
             display: flex;
             flex-direction: row;
@@ -51,25 +48,9 @@
         }
         
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .header {
-                flex-direction: column;
-                text-align: center;
-                padding: 15px;
-            }
-            
-            h1 {
-                font-size: 1.5rem !important;
-            }
-            
-            .live-badge {
-                margin-left: 0 !important;
-                margin-top: 5px;
-                display: inline-block;
-            }
+            body { padding: 10px; }
+            .header { flex-direction: column; text-align: center; }
+            h1 { font-size: 1.5rem !important; }
         }
         
         h1 {
@@ -78,8 +59,6 @@
             font-size: 2rem;
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
             gap: 10px;
         }
         
@@ -91,13 +70,9 @@
             font-size: 0.8rem;
             font-weight: bold;
             animation: pulse 1.5s infinite;
-            white-space: nowrap;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
         
         .logout-btn {
             background: transparent;
@@ -106,18 +81,10 @@
             padding: 8px 25px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.95rem;
             transition: 0.3s;
-            white-space: nowrap;
         }
+        .logout-btn:hover { background: cyan; color: #0a0f1e; box-shadow: 0 0 30px cyan; }
         
-        .logout-btn:hover {
-            background: cyan;
-            color: #0a0f1e;
-            box-shadow: 0 0 30px cyan;
-        }
-        
-        /* Responsive Sections */
         .section {
             background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(10px);
@@ -125,12 +92,6 @@
             border-radius: 20px;
             margin-bottom: 20px;
             border: 2px solid cyan;
-        }
-        
-        @media (max-width: 768px) {
-            .section {
-                padding: 15px;
-            }
         }
         
         .section h2 {
@@ -142,75 +103,24 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
         }
         
-        @media (max-width: 768px) {
-            .section h2 {
-                font-size: 1.3rem;
-            }
-        }
-        
-        /* Responsive Grid Systems */
+        /* Responsive Grids */
         .grid-2, .grid-3, .grid-4, .grid-5, .grid-10 {
             display: grid;
             gap: 15px;
             margin-bottom: 15px;
         }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-5 { grid-template-columns: repeat(5, 1fr); }
+        .grid-10 { grid-template-columns: repeat(5, 1fr); }
+        @media (max-width: 1200px) { .grid-5, .grid-10 { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .grid-2, .grid-3, .grid-4, .grid-5, .grid-10 { grid-template-columns: 1fr !important; } }
         
-        .grid-2 {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .grid-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-        
-        .grid-4 {
-            grid-template-columns: repeat(4, 1fr);
-        }
-        
-        .grid-5 {
-            grid-template-columns: repeat(5, 1fr);
-        }
-        
-        .grid-10 {
-            grid-template-columns: repeat(5, 1fr);
-        }
-        
-        /* Mobile Responsive Grid */
-        @media (max-width: 1200px) {
-            .grid-5, .grid-10 {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .grid-2, .grid-3, .grid-4, .grid-5, .grid-10 {
-                grid-template-columns: 1fr !important;
-                gap: 15px;
-            }
-        }
-        
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .grid-5, .grid-10 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        /* Form Elements */
-        .input-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            color: cyan;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-        
+        .input-group { margin-bottom: 15px; }
+        label { display: block; color: cyan; margin-bottom: 5px; font-weight: bold; }
         input, textarea, select {
             width: 100%;
             padding: 12px;
@@ -220,19 +130,7 @@
             color: white;
             font-size: 1rem;
         }
-        
-        @media (max-width: 768px) {
-            input, textarea, select {
-                padding: 14px;
-                font-size: 16px; /* Prevents zoom on mobile */
-            }
-        }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: cyan;
-            box-shadow: 0 0 20px cyan;
-        }
+        input:focus, textarea:focus { outline: none; border-color: cyan; box-shadow: 0 0 20px cyan; }
         
         .save-btn {
             background: cyan;
@@ -247,18 +145,7 @@
             width: 100%;
             margin-top: 15px;
         }
-        
-        @media (max-width: 768px) {
-            .save-btn {
-                padding: 16px;
-                font-size: 1rem;
-            }
-        }
-        
-        .save-btn:hover {
-            box-shadow: 0 0 50px cyan;
-            transform: scale(1.02);
-        }
+        .save-btn:hover { box-shadow: 0 0 50px cyan; transform: scale(1.02); }
         
         .small-btn {
             background: #00ffff33;
@@ -271,20 +158,8 @@
             font-size: 0.85rem;
             transition: 0.3s;
         }
+        .small-btn:hover { background: cyan; color: #0a0f1e; }
         
-        .small-btn:hover {
-            background: cyan;
-            color: #0a0f1e;
-        }
-        
-        @media (max-width: 768px) {
-            .small-btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-        }
-        
-        /* Cards */
         .preview-box {
             background: #0f172a;
             padding: 15px;
@@ -315,11 +190,7 @@
             border: 2px solid cyan;
             height: 100%;
         }
-        
-        .leadership-admin-card.batch-305-highlight {
-            border: 4px solid #00ff88;
-            background: linear-gradient(145deg, #1a4731, #0a2f1f);
-        }
+        .leadership-admin-card.batch-305-highlight { border: 4px solid #00ff88; background: linear-gradient(145deg, #1a4731, #0a2f1f); }
         
         .mission-admin-card {
             background: #1e293b;
@@ -327,16 +198,9 @@
             border-radius: 15px;
             border: 2px solid #ffaa00;
             height: 100%;
-            display: flex;
-            flex-direction: column;
         }
+        .mission-admin-card.mission-highlight { border: 4px solid #ffaa00; background: linear-gradient(145deg, #473a1a, #2f2a0a); }
         
-        .mission-admin-card.mission-highlight {
-            border: 4px solid #ffaa00;
-            background: linear-gradient(145deg, #473a1a, #2f2a0a);
-        }
-        
-        /* Badge Previews */
         .badge-preview {
             display: flex;
             align-items: center;
@@ -347,39 +211,19 @@
             border-radius: 10px;
             flex-wrap: wrap;
         }
-        
-        @media (max-width: 768px) {
-            .badge-preview {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-        
         .diamond-preview { color: #b9f2ff; font-size: 2rem; }
         .gold-preview { color: #ffd700; font-size: 2rem; }
         .silver-preview { color: #c0c0c0; font-size: 2rem; }
         .bronze-preview { color: #cd7f32; font-size: 2rem; }
         .standard-preview { color: #00ffff; font-size: 2rem; }
-        .gold-mission-preview { color: #ffd700; font-size: 2rem; }
-        .silver-mission-preview { color: #c0c0c0; font-size: 2rem; }
-        .bronze-mission-preview { color: #cd7f32; font-size: 2rem; }
-        .blue-mission-preview { color: #00ffff; font-size: 2rem; }
-        .purple-mission-preview { color: #aa80ff; font-size: 2rem; }
         
-        /* Mission Stats Input - Responsive */
         .mission-stats-input {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
-        
-        @media (max-width: 768px) {
-            .mission-stats-input {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-        }
+        @media (max-width: 768px) { .mission-stats-input { grid-template-columns: 1fr; } }
         
         .mission-stat-box {
             background: #0f172a;
@@ -387,43 +231,22 @@
             border-radius: 12px;
             text-align: center;
             border: 1px solid #ffaa00;
-            transition: all 0.3s ease;
         }
+        .mission-stat-box label { color: #ffaa00; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .mission-stat-box input { text-align: center; font-weight: bold; border: 2px solid #ffaa00; }
         
-        .mission-stat-box label {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            color: #ffaa00;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        
-        .mission-stat-box input {
+        .stats-preview {
+            margin-top: 15px;
+            padding: 15px;
+            background: #0f172a;
+            border-radius: 12px;
             text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            padding: 12px 5px;
-            border: 2px solid #ffaa00;
         }
+        .preview-values { display: flex; justify-content: center; gap: 20px; margin-top: 10px; flex-wrap: wrap; }
+        .preview-total { color: white; }
+        .preview-success { color: #00ff88; }
+        .preview-failed { color: #ff4d4d; }
         
-        @media (max-width: 768px) {
-            .mission-stat-box input {
-                font-size: 1.1rem;
-                padding: 12px;
-            }
-        }
-        
-        /* Color Classes */
-        .total-mission-color { color: #ffffff; }
-        .total-mission-color i { color: #ffaa00; }
-        .success-mission-color { color: #00ff88; }
-        .success-mission-color i { color: #00ff88; }
-        .failed-mission-color { color: #ff4d4d; }
-        .failed-mission-color i { color: #ff4d4d; }
-        
-        /* Checkbox Group */
         .checkbox-group {
             display: flex;
             align-items: center;
@@ -432,94 +255,9 @@
             padding: 12px;
             background: #0f172a;
             border-radius: 10px;
-            border: 1px solid #ffaa00;
-            flex-wrap: wrap;
         }
+        .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; accent-color: #ffaa00; }
         
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: #ffaa00;
-        }
-        
-        /* Stats Preview */
-        .stats-preview {
-            margin-top: 15px;
-            padding: 15px;
-            background: linear-gradient(145deg, #0a0f1e, #151e2f);
-            border-radius: 12px;
-            font-size: 1rem;
-            border: 1px solid #ffaa00;
-            text-align: center;
-        }
-        
-        .preview-values {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 10px;
-            font-size: 1.1rem;
-            flex-wrap: wrap;
-        }
-        
-        @media (max-width: 768px) {
-            .preview-values {
-                gap: 15px;
-                font-size: 1rem;
-            }
-        }
-        
-        .preview-total { color: white; }
-        .preview-success { color: #00ff88; }
-        .preview-failed { color: #ff4d4d; }
-        
-        /* Example Values */
-        .example-values {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #0f172a;
-            border-radius: 12px;
-            color: #aaa;
-            font-size: 0.9rem;
-            flex-wrap: wrap;
-            border: 1px dashed #ffaa00;
-        }
-        
-        .example-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        /* Quick Preset Buttons */
-        .preset-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .preset-buttons .small-btn {
-            flex: 1;
-            min-width: 70px;
-        }
-        
-        @media (max-width: 768px) {
-            .preset-buttons {
-                gap: 5px;
-            }
-            
-            .preset-buttons .small-btn {
-                font-size: 0.8rem;
-                padding: 8px 5px;
-            }
-        }
-        
-        /* Rank Control */
         .rank-control {
             display: flex;
             align-items: center;
@@ -527,17 +265,9 @@
             margin-bottom: 15px;
             flex-wrap: wrap;
         }
+        .rank-control label { min-width: 60px; margin-bottom: 0; }
+        .rank-control input { flex: 1; }
         
-        .rank-control label {
-            min-width: 60px;
-            margin-bottom: 0;
-        }
-        
-        .rank-control input {
-            flex: 1;
-        }
-        
-        /* Login Form - Responsive */
         #admin-login {
             max-width: 400px;
             margin: 50px auto;
@@ -547,68 +277,106 @@
             border: 2px solid cyan;
             box-shadow: 0 0 50px rgba(0,255,255,0.3);
         }
-        
-        @media (max-width: 768px) {
-            #admin-login {
-                margin: 20px auto;
-                padding: 25px 20px;
-                width: 95%;
-            }
-        }
-        
-        #admin-login h2 {
-            color: cyan;
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-        }
-        
-        @media (max-width: 768px) {
-            #admin-login h2 {
-                font-size: 1.5rem;
-            }
-        }
-        
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-        
-        ::-webkit-scrollbar-thumb {
+        #admin-login h2 { color: cyan; text-align: center; margin-bottom: 25px; }
+        #admin-login input { margin-bottom: 15px; }
+        #admin-login button {
+            width: 100%;
+            padding: 14px;
             background: cyan;
-            border-radius: 10px;
+            border: none;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
         }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00ffff;
+        /* WELCOME POPUP PREVIEW SECTION */
+        .welcome-preview-card {
+            background: linear-gradient(145deg, #1f1a15, #0e0b08);
+            border-radius: 32px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #ff884d;
+            text-align: center;
         }
+        .preview-img {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #ff884d;
+        }
+        .preview-title {
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #ffaa66, #ff6600);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+        .preview-msg {
+            background: rgba(0,0,0,0.4);
+            padding: 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+            color: #ffcc99;
+        }
+        
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
     </style>
 </head>
 <body>
     <div class="admin-container" id="admin-panel" style="display: none;">
-        <!-- Responsive Header -->
         <div class="header">
-            <h1>
-                <i class="fas fa-crown" style="color: cyan;"></i> 
-                ADMIN PANEL
-                <span class="live-badge">🔴 LIVE</span>
-            </h1>
+            <h1><i class="fas fa-crown"></i> ADMIN PANEL <span class="live-badge">🔴 LIVE</span></h1>
             <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> LOGOUT</button>
         </div>
 
-        <!-- Total Students Count -->
+        <!-- ========== NEW: WELCOME POPUP CONTROL (REALTIME) ========== -->
+        <div class="section">
+            <h2><i class="fas fa-gem"></i> ✨ WELCOME POPUP (ANIMATED TYPING) ✨</h2>
+            <p style="color:#aaa; margin-bottom:15px;">Customize the gorgeous popup that appears every time a user logs in. Image URL, Title, and Typing Message update in realtime via Firebase.</p>
+            
+            <div class="grid-2" style="grid-template-columns: 1fr 1fr;">
+                <div>
+                    <div class="input-group">
+                        <label><i class="fas fa-image"></i> Image URL (PostImage / direct link)</label>
+                        <input type="text" id="popupImageUrl" placeholder="https://i.postimg.cc/xxx/image.png">
+                        <button class="small-btn" style="margin-top:8px;" onclick="testImageUrl()">Test Image</button>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-heading"></i> Popup Title</label>
+                        <input type="text" id="popupTitle" placeholder="e.g., WELCOME TO CLOUD OF CORE">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-message"></i> Typing Message (supports emojis)</label>
+                        <textarea id="popupMessage" rows="3" placeholder="🌟 Experience the future of learning..."></textarea>
+                    </div>
+                    <button class="save-btn" onclick="saveWelcomePopupConfig()">
+                        <i class="fas fa-sync-alt"></i> PUBLISH & UPDATE REALTIME
+                    </button>
+                </div>
+                <div>
+                    <div class="welcome-preview-card">
+                        <h3 style="color:#ff884d; margin-bottom:12px;">🔮 LIVE PREVIEW</h3>
+                        <img id="previewImg" class="preview-img" src="https://i.postimg.cc/kX3Xh6PG/IMG-20260211-135705-716-removebg-preview.png" alt="preview">
+                        <div id="previewTitle" class="preview-title">WELCOME TO CLOUD OF CORE</div>
+                        <div id="previewMsg" class="preview-msg">🌟 Experience the future of learning. Stay tuned for daily missions!</div>
+                        <p style="font-size:0.7rem; margin-top:12px; color:#aaa;"><i class="fas fa-bolt"></i> Real-time sync to user dashboard</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Students Counter -->
         <div class="section">
             <h2><i class="fas fa-users"></i> Total Students Counter</h2>
             <input type="text" id="total-students-input" placeholder="e.g., 1,852 Students">
             <button class="save-btn" onclick="updateTotalStudents()">Update Total Students</button>
         </div>
 
-        <!-- Batch Statistics Control -->
+        <!-- Batch Statistics -->
         <div class="section">
             <h2><i class="fas fa-chart-line"></i> Batch Statistics</h2>
             <div class="grid-5" id="batch-stats-admin"></div>
@@ -618,35 +386,15 @@
         <!-- Best Performance Batch Leadership -->
         <div class="section">
             <h2><i class="fas fa-gem"></i> Best Performance Batch</h2>
-            <p style="color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">
-                Rank 1: Diamond 💎 | Rank 2: Gold 👑 | Rank 3: Silver 🥈 | Rank 4: Bronze 🥉 | Rank 5: Star ⭐
-            </p>
             <div class="grid-5" id="leadership-admin"></div>
             <button class="save-btn" onclick="saveLeadershipBoard()">Update Leadership Board</button>
         </div>
 
-        <!-- Mission Success Rank - Fully Responsive -->
+        <!-- Mission Success Rank -->
         <div class="section">
             <h2><i class="fas fa-bullseye"></i> Mission Success Rank</h2>
-            <p style="color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">
-                <i class="fas fa-star" style="color: #ffaa00;"></i> 
-                Set ANY numbers for Total, Success, and Failed missions
-            </p>
-            
-            <!-- Example Values - Responsive -->
-            <div class="example-values">
-                <div class="example-item"><i class="fas fa-tasks"></i> Total: 25</div>
-                <div class="example-item"><i class="fas fa-check-circle" style="color:#00ff88;"></i> Success: 20</div>
-                <div class="example-item"><i class="fas fa-times-circle" style="color:#ff4d4d;"></i> Failed: 5</div>
-                <div class="example-item"><i class="fas fa-tasks"></i> Total: 15</div>
-                <div class="example-item"><i class="fas fa-check-circle" style="color:#00ff88;"></i> Success: 12</div>
-                <div class="example-item"><i class="fas fa-times-circle" style="color:#ff4d4d;"></i> Failed: 3</div>
-            </div>
-            
             <div class="grid-5" id="mission-admin"></div>
-            <button class="save-btn" onclick="saveMissionRank()">
-                <i class="fas fa-save"></i> Update Mission Rank
-            </button>
+            <button class="save-btn" onclick="saveMissionRank()">Update Mission Rank</button>
         </div>
 
         <!-- Top 10 Ranking -->
@@ -671,7 +419,7 @@
         </div>
     </div>
 
-    <!-- Login - Responsive -->
+    <!-- Login Panel -->
     <div id="admin-login">
         <h2>🔐 ADMIN LOGIN</h2>
         <input type="email" id="admin-email" placeholder="📧 Email">
@@ -680,36 +428,32 @@
     </div>
 
     <script>
-        // ==================== NEW FIREBASE CONFIGURATION ====================
+        // Firebase config (same as user site)
         const firebaseConfig = {
             apiKey: "AIzaSyDDBbyxLcZYbSqSa12cSwK3yGxRU_NvLg8",
-  authDomain: "coccore-f5f6d.firebaseapp.com",
-  projectId: "coccore-f5f6d",
-  storageBucket: "coccore-f5f6d.firebasestorage.app",
-  messagingSenderId: "830480343011",
-  appId: "1:830480343011:web:038a91e8d619d6d2e28ad6",
-  measurementId: "G-ET9W850HEN"
+            authDomain: "coccore-f5f6d.firebaseapp.com",
+            projectId: "coccore-f5f6d",
+            storageBucket: "coccore-f5f6d.firebasestorage.app",
+            messagingSenderId: "830480343011",
+            appId: "1:830480343011:web:038a91e8d619d6d2e28ad6",
+            measurementId: "G-ET9W850HEN"
         };
-        
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-
+        
         const studentNames = ['majedul islam fahad', 'sayid hossain sayem', 'abu talha shamim', 'kamrul hassan sojib'];
 
-        // Responsive admin login
         function adminLogin() {
             const email = document.getElementById('admin-email').value;
-            const password = document.getElementById('admin-password').value;
-            auth.signInWithEmailAndPassword(email, password)
+            const pwd = document.getElementById('admin-password').value;
+            auth.signInWithEmailAndPassword(email, pwd)
                 .then(() => {
                     document.getElementById('admin-login').style.display = 'none';
                     document.getElementById('admin-panel').style.display = 'block';
                     loadAdminData();
                 })
-                .catch(err => {
-                    alert('Login failed: ' + err.message);
-                });
+                .catch(err => alert('Login failed: ' + err.message));
         }
 
         function logout() {
@@ -719,48 +463,78 @@
             });
         }
 
-        function loadAdminData() {
-            // Load total students
-            db.collection('settings').doc('general').get().then(doc => {
-                if (doc.exists) {
-                    document.getElementById('total-students-input').value = doc.data().totalStudents;
-                }
+        // ========== WELCOME POPUP FUNCTIONS ==========
+        async function loadWelcomePopupData() {
+            const doc = await db.collection('welcomePopup').doc('config').get();
+            let imageUrl = "https://i.postimg.cc/kX3Xh6PG/IMG-20260211-135705-716-removebg-preview.png";
+            let title = "WELCOME TO CLOUD OF CORE";
+            let message = "🌟 Experience the future of learning. Stay tuned for daily missions and exclusive rewards!";
+            if (doc.exists) {
+                const data = doc.data();
+                if (data.imageUrl) imageUrl = data.imageUrl;
+                if (data.title) title = data.title;
+                if (data.message) message = data.message;
+            }
+            document.getElementById('popupImageUrl').value = imageUrl;
+            document.getElementById('popupTitle').value = title;
+            document.getElementById('popupMessage').value = message;
+            // Update preview
+            document.getElementById('previewImg').src = imageUrl;
+            document.getElementById('previewTitle').innerText = title;
+            document.getElementById('previewMsg').innerText = message;
+        }
+        
+        function testImageUrl() {
+            const url = document.getElementById('popupImageUrl').value;
+            document.getElementById('previewImg').src = url;
+        }
+        
+        async function saveWelcomePopupConfig() {
+            const imageUrl = document.getElementById('popupImageUrl').value;
+            const title = document.getElementById('popupTitle').value;
+            const message = document.getElementById('popupMessage').value;
+            if (!imageUrl || !title || !message) {
+                alert("Please fill all fields (Image URL, Title, Message)");
+                return;
+            }
+            await db.collection('welcomePopup').doc('config').set({
+                imageUrl: imageUrl,
+                title: title,
+                message: message,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
-
+            alert("✅ Welcome Popup updated! Users will see the new popup on next login.");
+            loadWelcomePopupData(); // refresh preview
+        }
+        
+        // Other admin functions (unchanged but with realtime sync)
+        function loadAdminData() {
+            loadWelcomePopupData();
+            db.collection('settings').doc('general').get().then(doc => {
+                if (doc.exists) document.getElementById('total-students-input').value = doc.data().totalStudents;
+            });
             loadBatchStatsAdmin();
             loadLeadershipAdmin();
             loadMissionAdmin();
             loadRankingAdmin();
-            
             db.collection('notices').doc('latest').get().then(doc => {
-                if (doc.exists) {
-                    document.getElementById('notice-input').value = doc.data().content;
-                }
+                if (doc.exists) document.getElementById('notice-input').value = doc.data().content;
             });
-
             loadStudentsAdmin();
         }
-
+        
         function loadBatchStatsAdmin() {
             const container = document.getElementById('batch-stats-admin');
             const batches = ['301', '302', '303', '304', '305'];
             let html = '';
-            
-            batches.forEach(batch => {
-                html += `
-                    <div style="background: #1e293b; padding: 15px; border-radius: 12px;">
-                        <h3 style="color: cyan; margin-bottom: 10px;">Batch ${batch}</h3>
-                        <input type="text" id="batch-${batch}-value" placeholder="Value (e.g., 12.4K)" style="margin-bottom: 8px;">
-                        <select id="batch-${batch}-trend">
-                            <option value="up">📈 Up</option>
-                            <option value="down">📉 Down</option>
-                        </select>
-                    </div>
-                `;
+            batches.forEach(b => {
+                html += `<div style="background:#1e293b; padding:15px; border-radius:12px;">
+                            <h3 style="color:cyan;">Batch ${b}</h3>
+                            <input type="text" id="batch-${b}-value" placeholder="Value (e.g., 12.4K)" style="margin-bottom:8px;">
+                            <select id="batch-${b}-trend"><option value="up">📈 Up</option><option value="down">📉 Down</option></select>
+                         </div>`;
             });
-            
             container.innerHTML = html;
-            
             db.collection('batchStats').get().then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data();
@@ -771,243 +545,105 @@
                 });
             });
         }
-
+        
         function loadLeadershipAdmin() {
             const container = document.getElementById('leadership-admin');
             const batches = ['301', '302', '303', '304', '305'];
             let html = '';
-            
             batches.forEach(batch => {
-                const isBatch305 = batch === '305';
-                html += `
-                    <div class="leadership-admin-card ${isBatch305 ? 'batch-305-highlight' : ''}">
-                        <h3 style="color: cyan; margin-bottom: 15px;">Batch ${batch}</h3>
-                        
-                        <div class="input-group">
-                            <label>Rank (1-5):</label>
-                            <input type="number" id="leadership-${batch}-rank" min="1" max="5" value="5" onchange="updateLeadershipPreview('${batch}')">
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Value:</label>
-                            <input type="text" id="leadership-${batch}-value" placeholder="e.g., 21.0K">
-                        </div>
-                        
-                        <div class="badge-preview" id="leadership-${batch}-preview">
-                            <span>Badge:</span>
-                            <span id="leadership-${batch}-badge" class="standard-preview"><i class="fas fa-star"></i></span>
-                        </div>
-                    </div>
-                `;
+                const is305 = batch === '305';
+                html += `<div class="leadership-admin-card ${is305 ? 'batch-305-highlight' : ''}">
+                            <h3 style="color:cyan;">Batch ${batch}</h3>
+                            <div class="input-group"><label>Rank (1-5):</label><input type="number" id="leadership-${batch}-rank" min="1" max="5" value="5" onchange="updateLeadershipPreview('${batch}')"></div>
+                            <div class="input-group"><label>Value:</label><input type="text" id="leadership-${batch}-value" placeholder="e.g., 21.0K"></div>
+                            <div class="badge-preview"><span>Badge:</span><span id="leadership-${batch}-badge" class="standard-preview"><i class="fas fa-star"></i></span></div>
+                         </div>`;
             });
-            
             container.innerHTML = html;
-            
-            db.collection('batchLeadership').orderBy('rank', 'asc').get().then(snapshot => {
+            db.collection('batchLeadership').orderBy('rank').get().then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data();
                     const rankInput = document.getElementById(`leadership-${data.batch}-rank`);
-                    const valueInput = document.getElementById(`leadership-${data.batch}-value`);
-                    
+                    const valInput = document.getElementById(`leadership-${data.batch}-value`);
                     if (rankInput) rankInput.value = data.rank;
-                    if (valueInput) valueInput.value = data.value;
-                    
+                    if (valInput) valInput.value = data.value;
                     updateLeadershipPreview(data.batch);
                 });
             });
         }
-
+        
         function updateLeadershipPreview(batch) {
             const rank = parseInt(document.getElementById(`leadership-${batch}-rank`).value) || 5;
             const badgeSpan = document.getElementById(`leadership-${batch}-badge`);
-            
             badgeSpan.className = '';
-            
-            if (rank === 1) {
-                badgeSpan.innerHTML = '<i class="fas fa-gem"></i>';
-                badgeSpan.classList.add('diamond-preview');
-            } else if (rank === 2) {
-                badgeSpan.innerHTML = '<i class="fas fa-crown"></i>';
-                badgeSpan.classList.add('gold-preview');
-            } else if (rank === 3) {
-                badgeSpan.innerHTML = '<i class="fas fa-medal"></i>';
-                badgeSpan.classList.add('silver-preview');
-            } else if (rank === 4) {
-                badgeSpan.innerHTML = '<i class="fas fa-award"></i>';
-                badgeSpan.classList.add('bronze-preview');
-            } else {
-                badgeSpan.innerHTML = '<i class="fas fa-star"></i>';
-                badgeSpan.classList.add('standard-preview');
-            }
+            if (rank === 1) { badgeSpan.innerHTML = '<i class="fas fa-gem"></i>'; badgeSpan.classList.add('diamond-preview'); }
+            else if (rank === 2) { badgeSpan.innerHTML = '<i class="fas fa-crown"></i>'; badgeSpan.classList.add('gold-preview'); }
+            else if (rank === 3) { badgeSpan.innerHTML = '<i class="fas fa-medal"></i>'; badgeSpan.classList.add('silver-preview'); }
+            else if (rank === 4) { badgeSpan.innerHTML = '<i class="fas fa-award"></i>'; badgeSpan.classList.add('bronze-preview'); }
+            else { badgeSpan.innerHTML = '<i class="fas fa-star"></i>'; badgeSpan.classList.add('standard-preview'); }
         }
-
-        // Responsive Mission Admin
+        
         function loadMissionAdmin() {
             const container = document.getElementById('mission-admin');
             const batches = ['301', '302', '303', '304', '305'];
             let html = '';
-            
             batches.forEach(batch => {
-                const isHighlighted = batch === '305';
-                html += `
-                    <div class="mission-admin-card ${isHighlighted ? 'mission-highlight' : ''}">
-                        <h3 style="color: #ffaa00; margin-bottom: 15px; text-align: center;">
-                            Batch ${batch}
-                        </h3>
-                        
-                        <div class="rank-control">
-                            <label>Rank:</label>
-                            <input type="number" id="mission-${batch}-rank" min="1" max="5" value="5" onchange="updateMissionPreview('${batch}')">
-                        </div>
-                        
-                        <!-- Responsive Mission Stats Input -->
-                        <div class="mission-stats-input">
-                            <div class="mission-stat-box">
-                                <label class="total-mission-color">
-                                    <i class="fas fa-tasks"></i> TOTAL
-                                </label>
-                                <input type="number" id="mission-${batch}-total" value="0" min="0" 
-                                       oninput="updateMissionStatsPreview('${batch}')">
+                const isHighlight = batch === '305';
+                html += `<div class="mission-admin-card ${isHighlight ? 'mission-highlight' : ''}">
+                            <h3 style="color:#ffaa00;">Batch ${batch}</h3>
+                            <div class="rank-control"><label>Rank:</label><input type="number" id="mission-${batch}-rank" min="1" max="5" value="5" onchange="updateMissionPreview('${batch}')"></div>
+                            <div class="mission-stats-input">
+                                <div class="mission-stat-box"><label><i class="fas fa-tasks"></i> TOTAL</label><input type="number" id="mission-${batch}-total" value="0" min="0" oninput="updateMissionStatsPreview('${batch}')"></div>
+                                <div class="mission-stat-box"><label><i class="fas fa-check-circle"></i> SUCCESS</label><input type="number" id="mission-${batch}-success" value="0" min="0" oninput="updateMissionStatsPreview('${batch}')"></div>
+                                <div class="mission-stat-box"><label><i class="fas fa-times-circle"></i> FAILED</label><input type="number" id="mission-${batch}-failed" value="0" min="0" oninput="updateMissionStatsPreview('${batch}')"></div>
                             </div>
-                            
-                            <div class="mission-stat-box">
-                                <label class="success-mission-color">
-                                    <i class="fas fa-check-circle"></i> SUCCESS
-                                </label>
-                                <input type="number" id="mission-${batch}-success" value="0" min="0" 
-                                       oninput="updateMissionStatsPreview('${batch}')">
-                            </div>
-                            
-                            <div class="mission-stat-box">
-                                <label class="failed-mission-color">
-                                    <i class="fas fa-times-circle"></i> FAILED
-                                </label>
-                                <input type="number" id="mission-${batch}-failed" value="0" min="0" 
-                                       oninput="updateMissionStatsPreview('${batch}')">
-                            </div>
-                        </div>
-                        
-                        <!-- Live Preview -->
-                        <div class="stats-preview">
-                            <div class="preview-values">
-                                <span class="preview-total">
-                                    <i class="fas fa-tasks"></i> <span id="preview-total-${batch}">0</span>
-                                </span>
-                                <span class="preview-success">
-                                    <i class="fas fa-check-circle"></i> <span id="preview-success-${batch}">0</span>
-                                </span>
-                                <span class="preview-failed">
-                                    <i class="fas fa-times-circle"></i> <span id="preview-failed-${batch}">0</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Highlight Checkbox -->
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="mission-${batch}-highlight" ${isHighlighted ? 'checked' : ''}>
-                            <label>Highlight this batch</label>
-                        </div>
-                        
-                        <!-- Badge Preview -->
-                        <div class="badge-preview">
-                            <span>Badge:</span>
-                            <span id="mission-${batch}-badge" class="standard-preview"><i class="fas fa-star"></i></span>
-                        </div>
-                        
-                        <!-- Preset Buttons - Responsive -->
-                        <div class="preset-buttons">
-                            <button class="small-btn" onclick="setMissionPreset('${batch}', 25, 20, 5)">25/20/5</button>
-                            <button class="small-btn" onclick="setMissionPreset('${batch}', 15, 12, 3)">15/12/3</button>
-                            <button class="small-btn" onclick="setMissionPreset('${batch}', 30, 28, 2)">30/28/2</button>
-                            <button class="small-btn" onclick="setMissionPreset('${batch}', 10, 8, 2)">10/8/2</button>
-                        </div>
-                    </div>
-                `;
+                            <div class="stats-preview"><div class="preview-values"><span class="preview-total"><i class="fas fa-tasks"></i> <span id="preview-total-${batch}">0</span></span><span class="preview-success"><i class="fas fa-check-circle"></i> <span id="preview-success-${batch}">0</span></span><span class="preview-failed"><i class="fas fa-times-circle"></i> <span id="preview-failed-${batch}">0</span></span></div></div>
+                            <div class="checkbox-group"><input type="checkbox" id="mission-${batch}-highlight" ${isHighlight ? 'checked' : ''}> <label>Highlight this batch</label></div>
+                            <div class="badge-preview"><span>Badge:</span><span id="mission-${batch}-badge" class="standard-preview"><i class="fas fa-star"></i></span></div>
+                         </div>`;
             });
-            
             container.innerHTML = html;
-            
-            // Load existing data
-            db.collection('missionRank').orderBy('rank', 'asc').get().then(snapshot => {
+            db.collection('missionRank').orderBy('rank').get().then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data();
-                    const batch = data.batch;
-                    
-                    const rankInput = document.getElementById(`mission-${batch}-rank`);
-                    const totalInput = document.getElementById(`mission-${batch}-total`);
-                    const successInput = document.getElementById(`mission-${batch}-success`);
-                    const failedInput = document.getElementById(`mission-${batch}-failed`);
-                    const highlightCheck = document.getElementById(`mission-${batch}-highlight`);
-                    
-                    if (rankInput) rankInput.value = data.rank || 5;
-                    if (totalInput) totalInput.value = data.totalMissions || 0;
-                    if (successInput) successInput.value = data.successMissions || 0;
-                    if (failedInput) failedInput.value = data.failedMissions || 0;
-                    if (highlightCheck) highlightCheck.checked = data.highlighted || false;
-                    
-                    updateMissionPreview(batch);
-                    updateMissionStatsPreview(batch);
+                    const b = data.batch;
+                    document.getElementById(`mission-${b}-rank`) && (document.getElementById(`mission-${b}-rank`).value = data.rank || 5);
+                    document.getElementById(`mission-${b}-total`) && (document.getElementById(`mission-${b}-total`).value = data.totalMissions || 0);
+                    document.getElementById(`mission-${b}-success`) && (document.getElementById(`mission-${b}-success`).value = data.successMissions || 0);
+                    document.getElementById(`mission-${b}-failed`) && (document.getElementById(`mission-${b}-failed`).value = data.failedMissions || 0);
+                    if (document.getElementById(`mission-${b}-highlight`)) document.getElementById(`mission-${b}-highlight`).checked = data.highlighted || false;
+                    updateMissionPreview(b);
+                    updateMissionStatsPreview(b);
                 });
             });
         }
-
-        function setMissionPreset(batch, total, success, failed) {
-            document.getElementById(`mission-${batch}-total`).value = total;
-            document.getElementById(`mission-${batch}-success`).value = success;
-            document.getElementById(`mission-${batch}-failed`).value = failed;
-            updateMissionStatsPreview(batch);
-        }
-
+        
         function updateMissionStatsPreview(batch) {
             const total = document.getElementById(`mission-${batch}-total`).value || 0;
             const success = document.getElementById(`mission-${batch}-success`).value || 0;
             const failed = document.getElementById(`mission-${batch}-failed`).value || 0;
-            
-            document.getElementById(`preview-total-${batch}`).textContent = total;
-            document.getElementById(`preview-success-${batch}`).textContent = success;
-            document.getElementById(`preview-failed-${batch}`).textContent = failed;
+            document.getElementById(`preview-total-${batch}`).innerText = total;
+            document.getElementById(`preview-success-${batch}`).innerText = success;
+            document.getElementById(`preview-failed-${batch}`).innerText = failed;
         }
-
+        
         function updateMissionPreview(batch) {
             const rank = parseInt(document.getElementById(`mission-${batch}-rank`).value) || 5;
             const badgeSpan = document.getElementById(`mission-${batch}-badge`);
-            
             badgeSpan.className = '';
-            
-            if (rank === 1) {
-                badgeSpan.innerHTML = '<i class="fas fa-trophy"></i>';
-                badgeSpan.classList.add('gold-mission-preview');
-            } else if (rank === 2) {
-                badgeSpan.innerHTML = '<i class="fas fa-medal"></i>';
-                badgeSpan.classList.add('silver-mission-preview');
-            } else if (rank === 3) {
-                badgeSpan.innerHTML = '<i class="fas fa-award"></i>';
-                badgeSpan.classList.add('bronze-mission-preview');
-            } else if (rank === 4) {
-                badgeSpan.innerHTML = '<i class="fas fa-star"></i>';
-                badgeSpan.classList.add('blue-mission-preview');
-            } else {
-                badgeSpan.innerHTML = '<i class="fas fa-chevron-circle-up"></i>';
-                badgeSpan.classList.add('purple-mission-preview');
-            }
+            if (rank === 1) { badgeSpan.innerHTML = '<i class="fas fa-trophy"></i>'; badgeSpan.classList.add('gold-preview'); }
+            else if (rank === 2) { badgeSpan.innerHTML = '<i class="fas fa-medal"></i>'; badgeSpan.classList.add('silver-preview'); }
+            else if (rank === 3) { badgeSpan.innerHTML = '<i class="fas fa-award"></i>'; badgeSpan.classList.add('bronze-preview'); }
+            else { badgeSpan.innerHTML = '<i class="fas fa-chevron-circle-up"></i>'; badgeSpan.classList.add('standard-preview'); }
         }
-
+        
         function loadRankingAdmin() {
             const container = document.getElementById('ranking-admin');
             let html = '';
-            
             for (let i = 1; i <= 10; i++) {
-                html += `
-                    <div class="rank-item-admin">
-                        <h4 style="color: cyan;">#${i}</h4>
-                        <input type="text" id="rank-${i}-name" placeholder="Student Name" style="margin-bottom: 8px;">
-                        <input type="number" id="rank-${i}-points" placeholder="Points">
-                    </div>
-                `;
+                html += `<div class="rank-item-admin"><h4 style="color:cyan;">#${i}</h4><input type="text" id="rank-${i}-name" placeholder="Student Name" style="margin-bottom:8px;"><input type="number" id="rank-${i}-points" placeholder="Points"></div>`;
             }
-            
             container.innerHTML = html;
-            
             db.collection('ranking').orderBy('points', 'desc').limit(10).get().then(snapshot => {
                 let i = 1;
                 snapshot.forEach(doc => {
@@ -1018,41 +654,15 @@
                 });
             });
         }
-
+        
         function loadStudentsAdmin() {
             const container = document.getElementById('students-container');
             container.innerHTML = '';
-            
             studentNames.forEach(name => {
                 const div = document.createElement('div');
                 div.className = 'student-card';
-                div.innerHTML = `
-                    <h3 style="color: cyan; margin-bottom: 15px;">${name.toUpperCase()}</h3>
-                    <div class="grid-3">
-                        <div>
-                            <label>Class Points:</label>
-                            <input type="number" id="${name}-classPoints" value="94">
-                        </div>
-                        <div>
-                            <label>Total Points:</label>
-                            <input type="number" id="${name}-totalPoints" value="486">
-                        </div>
-                        <div>
-                            <label>Exam Marks:</label>
-                            <input type="number" id="${name}-examMarks" value="89">
-                        </div>
-                        <div>
-                            <label>Total Marks:</label>
-                            <input type="number" id="${name}-totalMarks" value="445">
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px;">
-                        <label>Notice:</label>
-                        <textarea id="${name}-notice" rows="2">🌟 Outstanding performance!</textarea>
-                    </div>
-                `;
+                div.innerHTML = `<h3 style="color:cyan;">${name.toUpperCase()}</h3><div class="grid-3"><div><label>Class Points:</label><input type="number" id="${name}-classPoints" value="94"></div><div><label>Total Points:</label><input type="number" id="${name}-totalPoints" value="486"></div><div><label>Exam Marks:</label><input type="number" id="${name}-examMarks" value="89"></div><div><label>Total Marks:</label><input type="number" id="${name}-totalMarks" value="445"></div></div><div><label>Notice:</label><textarea id="${name}-notice" rows="2">🌟 Outstanding performance!</textarea></div>`;
                 container.appendChild(div);
-
                 db.collection('students').doc(name).get().then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
@@ -1065,128 +675,15 @@
                 });
             });
         }
-
-        // Save Functions
-        function updateTotalStudents() {
-            const val = document.getElementById('total-students-input').value;
-            db.collection('settings').doc('general').set({ totalStudents: val })
-                .then(() => alert('Total students updated!'));
-        }
-
-        function saveBatchStats() {
-            const batches = ['301', '302', '303', '304', '305'];
-            const batch = db.batch();
-            
-            batches.forEach(b => {
-                const value = document.getElementById(`batch-${b}-value`).value;
-                const trend = document.getElementById(`batch-${b}-trend`).value;
-                if (value) {
-                    const ref = db.collection('batchStats').doc(b);
-                    batch.set(ref, { batch: b, value, trend });
-                }
-            });
-            
-            batch.commit().then(() => alert('Batch stats updated!'));
-        }
-
-        function saveLeadershipBoard() {
-            const batches = ['301', '302', '303', '304', '305'];
-            const batch = db.batch();
-            
-            db.collection('batchLeadership').get().then(snapshot => {
-                snapshot.forEach(doc => batch.delete(doc.ref));
-                
-                batches.forEach(b => {
-                    const rank = parseInt(document.getElementById(`leadership-${b}-rank`).value) || 5;
-                    const value = document.getElementById(`leadership-${b}-value`).value || '0';
-                    
-                    const ref = db.collection('batchLeadership').doc(b);
-                    batch.set(ref, { batch: b, rank: rank, value: value });
-                });
-                
-                batch.commit().then(() => {
-                    alert('Leadership board updated!');
-                    loadLeadershipAdmin();
-                });
-            });
-        }
-
-        function saveMissionRank() {
-            const batches = ['301', '302', '303', '304', '305'];
-            const batch = db.batch();
-            
-            db.collection('missionRank').get().then(snapshot => {
-                snapshot.forEach(doc => batch.delete(doc.ref));
-                
-                batches.forEach(b => {
-                    const rank = parseInt(document.getElementById(`mission-${b}-rank`).value) || 5;
-                    const totalMissions = parseInt(document.getElementById(`mission-${b}-total`).value) || 0;
-                    const successMissions = parseInt(document.getElementById(`mission-${b}-success`).value) || 0;
-                    const failedMissions = parseInt(document.getElementById(`mission-${b}-failed`).value) || 0;
-                    const highlighted = document.getElementById(`mission-${b}-highlight`).checked;
-                    
-                    const ref = db.collection('missionRank').doc(b);
-                    batch.set(ref, { 
-                        batch: b, 
-                        rank: rank,
-                        totalMissions: totalMissions,
-                        successMissions: successMissions,
-                        failedMissions: failedMissions,
-                        highlighted: highlighted
-                    });
-                });
-                
-                batch.commit().then(() => {
-                    alert('Mission rank updated successfully!');
-                    loadMissionAdmin();
-                });
-            });
-        }
-
-        function saveRanking() {
-            const batch = db.batch();
-            
-            for (let i = 1; i <= 10; i++) {
-                const name = document.getElementById(`rank-${i}-name`).value;
-                const points = parseInt(document.getElementById(`rank-${i}-points`).value) || 0;
-                
-                if (name) {
-                    const ref = db.collection('ranking').doc(`rank-${i}`);
-                    batch.set(ref, { name, points });
-                }
-            }
-            
-            batch.commit().then(() => alert('Ranking updated!'));
-        }
-
-        function saveNotice() {
-            const content = document.getElementById('notice-input').value;
-            db.collection('notices').doc('latest').set({ content })
-                .then(() => alert('Notice updated!'));
-        }
-
-        function saveAllStudents() {
-            const batch = db.batch();
-            
-            studentNames.forEach(name => {
-                const data = {
-                    classPoints: parseInt(document.getElementById(`${name}-classPoints`).value) || 0,
-                    totalPoints: parseInt(document.getElementById(`${name}-totalPoints`).value) || 0,
-                    examMarks: parseInt(document.getElementById(`${name}-examMarks`).value) || 0,
-                    totalMarks: parseInt(document.getElementById(`${name}-totalMarks`).value) || 0,
-                    notice: document.getElementById(`${name}-notice`).value || ''
-                };
-                const ref = db.collection('students').doc(name);
-                batch.set(ref, data);
-            });
-            
-            batch.commit().then(() => {
-                alert('All students updated!');
-                db.collection('triggers').doc('update').set({ timestamp: Date.now() });
-            });
-        }
-
-        // Auth state observer
+        
+        function updateTotalStudents() { const val = document.getElementById('total-students-input').value; db.collection('settings').doc('general').set({ totalStudents: val }).then(()=>alert('Updated!')); }
+        function saveBatchStats() { const batchOp = db.batch(); ['301','302','303','304','305'].forEach(b=>{ const val=document.getElementById(`batch-${b}-value`).value, trend=document.getElementById(`batch-${b}-trend`).value; if(val) batchOp.set(db.collection('batchStats').doc(b),{batch:b,value:val,trend}); }); batchOp.commit().then(()=>alert('Batch stats updated!')); }
+        function saveLeadershipBoard() { const batchOp = db.batch(); db.collection('batchLeadership').get().then(snapshot=>{ snapshot.forEach(d=>batchOp.delete(d.ref)); ['301','302','303','304','305'].forEach(b=>{ const rank=parseInt(document.getElementById(`leadership-${b}-rank`).value)||5, value=document.getElementById(`leadership-${b}-value`).value||'0'; batchOp.set(db.collection('batchLeadership').doc(b),{batch:b,rank,value}); }); batchOp.commit().then(()=>{alert('Leadership updated!'); loadLeadershipAdmin();}); }); }
+        function saveMissionRank() { const batchOp = db.batch(); db.collection('missionRank').get().then(snapshot=>{ snapshot.forEach(d=>batchOp.delete(d.ref)); ['301','302','303','304','305'].forEach(b=>{ const rank=parseInt(document.getElementById(`mission-${b}-rank`).value)||5, total=parseInt(document.getElementById(`mission-${b}-total`).value)||0, success=parseInt(document.getElementById(`mission-${b}-success`).value)||0, failed=parseInt(document.getElementById(`mission-${b}-failed`).value)||0, highlighted=document.getElementById(`mission-${b}-highlight`).checked; batchOp.set(db.collection('missionRank').doc(b),{batch:b,rank,totalMissions:total,successMissions:success,failedMissions:failed,highlighted}); }); batchOp.commit().then(()=>{alert('Mission rank updated!'); loadMissionAdmin();}); }); }
+        function saveRanking() { const batchOp = db.batch(); for(let i=1;i<=10;i++){ const name=document.getElementById(`rank-${i}-name`).value, points=parseInt(document.getElementById(`rank-${i}-points`).value)||0; if(name) batchOp.set(db.collection('ranking').doc(`rank-${i}`),{name,points}); } batchOp.commit().then(()=>alert('Ranking updated!')); }
+        function saveNotice() { const content=document.getElementById('notice-input').value; db.collection('notices').doc('latest').set({content}).then(()=>alert('Notice updated!')); }
+        function saveAllStudents() { const batchOp = db.batch(); studentNames.forEach(name=>{ const data={ classPoints:parseInt(document.getElementById(`${name}-classPoints`).value)||0, totalPoints:parseInt(document.getElementById(`${name}-totalPoints`).value)||0, examMarks:parseInt(document.getElementById(`${name}-examMarks`).value)||0, totalMarks:parseInt(document.getElementById(`${name}-totalMarks`).value)||0, notice:document.getElementById(`${name}-notice`).value||'' }; batchOp.set(db.collection('students').doc(name),data); }); batchOp.commit().then(()=>{ alert('305 Batch students updated!'); db.collection('triggers').doc('update').set({timestamp:Date.now()}); }); }
+        
         auth.onAuthStateChanged(user => {
             if (user) {
                 document.getElementById('admin-login').style.display = 'none';

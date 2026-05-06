@@ -175,6 +175,11 @@
             margin-bottom: 20px;
             border-left: 5px solid cyan;
         }
+        .student-card h3 {
+            color: cyan;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+        }
         
         .rank-item-admin {
             background: #1e293b;
@@ -323,6 +328,32 @@
             color: #ffcc99;
         }
         
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #00ff88;
+            color: #0a0f1e;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            z-index: 1000;
+            animation: fadeInOut 2s ease;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+        
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
         @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
     </style>
 </head>
@@ -333,7 +364,7 @@
             <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> LOGOUT</button>
         </div>
 
-        <!-- ========== NEW: WELCOME POPUP CONTROL (REALTIME) ========== -->
+        <!-- ========== WELCOME POPUP CONTROL (REALTIME) ========== -->
         <div class="section">
             <h2><i class="fas fa-gem"></i> ✨ WELCOME POPUP (ANIMATED TYPING) ✨</h2>
             <p style="color:#aaa; margin-bottom:15px;">Customize the gorgeous popup that appears every time a user logs in. Image URL, Title, and Typing Message update in realtime via Firebase.</p>
@@ -376,6 +407,20 @@
             <button class="save-btn" onclick="updateTotalStudents()">Update Total Students</button>
         </div>
 
+        <!-- Today Class Section -->
+        <div class="section">
+            <h2><i class="fas fa-tv"></i> Today's Class</h2>
+            <input type="text" id="today-class-input" placeholder="e.g., Web Development Class">
+            <button class="save-btn" onclick="updateTodayClass()">Update Today's Class</button>
+        </div>
+
+        <!-- Today Update Section -->
+        <div class="section">
+            <h2><i class="fas fa-bell"></i> Today's Update</h2>
+            <textarea id="today-update-input" rows="3" placeholder="Daily update message..."></textarea>
+            <button class="save-btn" onclick="updateTodayUpdate()">Update Today's Update</button>
+        </div>
+
         <!-- Batch Statistics -->
         <div class="section">
             <h2><i class="fas fa-chart-line"></i> Batch Statistics</h2>
@@ -411,11 +456,14 @@
             <button class="save-btn" onclick="saveNotice()">Update Notice</button>
         </div>
 
-        <!-- 305 Batch Students -->
+        <!-- Batch 305 Students - Complete 7 Students -->
         <div class="section">
-            <h2><i class="fas fa-user-graduate"></i> Batch 305 Students</h2>
-            <div id="students-container"></div>
-            <button class="save-btn" onclick="saveAllStudents()">Update 305 Batch</button>
+            <h2><i class="fas fa-user-graduate"></i> BATCH 305 STUDENTS (7 Students)</h2>
+            <p style="color:#aaa; margin-bottom:15px;">Edit student details below. Changes will sync realtime to user dashboard.</p>
+            <div id="students-container" class="student-grid"></div>
+            <button class="save-btn" onclick="saveAllStudents()">
+                <i class="fas fa-save"></i> SAVE ALL STUDENTS & SYNC REALTIME
+            </button>
         </div>
     </div>
 
@@ -427,22 +475,42 @@
         <button onclick="adminLogin()">Login to Control Panel</button>
     </div>
 
+    <div id="toast-message" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;"></div>
+
     <script>
-        // Firebase config (same as user site)
+        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyBMQWWMYp_aoHX4oV-wn83yvnPT1Urc7F0",
-  authDomain: "cloudofcore-4bfa4.firebaseapp.com",
-  projectId: "cloudofcore-4bfa4",
-  storageBucket: "cloudofcore-4bfa4.firebasestorage.app",
-  messagingSenderId: "781262918779",
-  appId: "1:781262918779:web:fba0d81bcf902d87f7bede",
-  measurementId: "G-MKGRDB5X8S"
+            authDomain: "cloudofcore-4bfa4.firebaseapp.com",
+            projectId: "cloudofcore-4bfa4",
+            storageBucket: "cloudofcore-4bfa4.firebasestorage.app",
+            messagingSenderId: "781262918779",
+            appId: "1:781262918779:web:fba0d81bcf902d87f7bede",
+            measurementId: "G-MKGRDB5X8S"
         };
+        
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
         
-        const studentNames = ['majedul islam fahad', 'sayid hossain sayem', 'abu talha shamim', 'kamrul hassan sojib'];
+        // Complete 7 students from dashboard.tsx
+        const studentNames = [
+            'majedul islam fahad', 
+            'sayid hossain sayem', 
+            'abu talha shamim', 
+            'kamrul hassan sojib',
+            'md jafor ahmed',
+            'mosharof khan',
+            'arfat hossain'
+        ];
+        
+        function showToast(message, isError = false) {
+            const toastDiv = document.getElementById('toast-message');
+            toastDiv.innerHTML = `<div class="toast" style="background: ${isError ? '#ff4444' : '#00ff88'};">${message}</div>`;
+            setTimeout(() => {
+                toastDiv.innerHTML = '';
+            }, 2000);
+        }
 
         function adminLogin() {
             const email = document.getElementById('admin-email').value;
@@ -452,64 +520,139 @@
                     document.getElementById('admin-login').style.display = 'none';
                     document.getElementById('admin-panel').style.display = 'block';
                     loadAdminData();
+                    showToast('✅ Login successful!');
                 })
-                .catch(err => alert('Login failed: ' + err.message));
+                .catch(err => showToast('Login failed: ' + err.message, true));
         }
 
         function logout() {
             auth.signOut().then(() => {
                 document.getElementById('admin-panel').style.display = 'none';
                 document.getElementById('admin-login').style.display = 'block';
+                showToast('Logged out');
             });
         }
 
         // ========== WELCOME POPUP FUNCTIONS ==========
         async function loadWelcomePopupData() {
-            const doc = await db.collection('welcomePopup').doc('config').get();
-            let imageUrl = "https://i.postimg.cc/kX3Xh6PG/IMG-20260211-135705-716-removebg-preview.png";
-            let title = "WELCOME TO CLOUD OF CORE";
-            let message = "🌟 Experience the future of learning. Stay tuned for daily missions and exclusive rewards!";
-            if (doc.exists) {
-                const data = doc.data();
-                if (data.imageUrl) imageUrl = data.imageUrl;
-                if (data.title) title = data.title;
-                if (data.message) message = data.message;
+            try {
+                const docRef = db.collection('welcomePopup').doc('config');
+                const doc = await docRef.get();
+                let imageUrl = "https://i.postimg.cc/kX3Xh6PG/IMG-20260211-135705-716-removebg-preview.png";
+                let title = "WELCOME TO CLOUD OF CORE";
+                let message = "🌟 Experience the future of learning. Stay tuned for daily missions and exclusive rewards!";
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (data.imageUrl) imageUrl = data.imageUrl;
+                    if (data.title) title = data.title;
+                    if (data.message) message = data.message;
+                }
+                document.getElementById('popupImageUrl').value = imageUrl;
+                document.getElementById('popupTitle').value = title;
+                document.getElementById('popupMessage').value = message;
+                document.getElementById('previewImg').src = imageUrl;
+                document.getElementById('previewTitle').innerText = title;
+                document.getElementById('previewMsg').innerText = message;
+            } catch (error) {
+                console.error("Error loading welcome popup:", error);
             }
-            document.getElementById('popupImageUrl').value = imageUrl;
-            document.getElementById('popupTitle').value = title;
-            document.getElementById('popupMessage').value = message;
-            // Update preview
-            document.getElementById('previewImg').src = imageUrl;
-            document.getElementById('previewTitle').innerText = title;
-            document.getElementById('previewMsg').innerText = message;
         }
         
         function testImageUrl() {
             const url = document.getElementById('popupImageUrl').value;
-            document.getElementById('previewImg').src = url;
+            if (url) {
+                document.getElementById('previewImg').src = url;
+                showToast('Testing image URL...');
+            } else {
+                showToast('Please enter an image URL first', true);
+            }
         }
         
         async function saveWelcomePopupConfig() {
             const imageUrl = document.getElementById('popupImageUrl').value;
             const title = document.getElementById('popupTitle').value;
             const message = document.getElementById('popupMessage').value;
+            
             if (!imageUrl || !title || !message) {
-                alert("Please fill all fields (Image URL, Title, Message)");
+                showToast('Please fill all fields (Image URL, Title, Message)', true);
                 return;
             }
-            await db.collection('welcomePopup').doc('config').set({
-                imageUrl: imageUrl,
-                title: title,
-                message: message,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            alert("✅ Welcome Popup updated! Users will see the new popup on next login.");
-            loadWelcomePopupData(); // refresh preview
+            
+            try {
+                await db.collection('welcomePopup').doc('config').set({
+                    imageUrl: imageUrl,
+                    title: title,
+                    message: message,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showToast('✅ Welcome Popup updated! Users will see the new popup immediately.');
+                loadWelcomePopupData();
+            } catch (error) {
+                showToast('Error saving: ' + error.message, true);
+            }
         }
         
-        // Other admin functions (unchanged but with realtime sync)
+        // Today's Class Function
+        async function updateTodayClass() {
+            const content = document.getElementById('today-class-input').value;
+            if (!content) {
+                showToast('Please enter today\'s class', true);
+                return;
+            }
+            try {
+                await db.collection('settings').doc('todayClass').set({ content });
+                showToast('✅ Today\'s Class updated!');
+            } catch (error) {
+                showToast('Error: ' + error.message, true);
+            }
+        }
+        
+        async function loadTodayClass() {
+            try {
+                const doc = await db.collection('settings').doc('todayClass').get();
+                if (doc.exists) {
+                    document.getElementById('today-class-input').value = doc.data().content;
+                } else {
+                    document.getElementById('today-class-input').value = 'No Class';
+                }
+            } catch (error) {
+                console.error("Error loading today class:", error);
+            }
+        }
+        
+        // Today's Update Function
+        async function updateTodayUpdate() {
+            const content = document.getElementById('today-update-input').value;
+            if (!content) {
+                showToast('Please enter today\'s update', true);
+                return;
+            }
+            try {
+                await db.collection('settings').doc('todayUpdate').set({ content });
+                showToast('✅ Today\'s Update updated!');
+            } catch (error) {
+                showToast('Error: ' + error.message, true);
+            }
+        }
+        
+        async function loadTodayUpdate() {
+            try {
+                const doc = await db.collection('settings').doc('todayUpdate').get();
+                if (doc.exists) {
+                    document.getElementById('today-update-input').value = doc.data().content;
+                } else {
+                    document.getElementById('today-update-input').value = 'Welcome to Cloud of Core! Stay tuned for daily updates.';
+                }
+            } catch (error) {
+                console.error("Error loading today update:", error);
+            }
+        }
+        
+        // Other admin functions
         function loadAdminData() {
             loadWelcomePopupData();
+            loadTodayClass();
+            loadTodayUpdate();
             db.collection('settings').doc('general').get().then(doc => {
                 if (doc.exists) document.getElementById('total-students-input').value = doc.data().totalStudents;
             });
@@ -655,40 +798,154 @@
             });
         }
         
+        // Load all 7 students in admin panel
         function loadStudentsAdmin() {
             const container = document.getElementById('students-container');
             container.innerHTML = '';
+            
             studentNames.forEach(name => {
                 const div = document.createElement('div');
                 div.className = 'student-card';
-                div.innerHTML = `<h3 style="color:cyan;">${name.toUpperCase()}</h3><div class="grid-3"><div><label>Class Points:</label><input type="number" id="${name}-classPoints" value="94"></div><div><label>Total Points:</label><input type="number" id="${name}-totalPoints" value="486"></div><div><label>Exam Marks:</label><input type="number" id="${name}-examMarks" value="89"></div><div><label>Total Marks:</label><input type="number" id="${name}-totalMarks" value="445"></div></div><div><label>Notice:</label><textarea id="${name}-notice" rows="2">🌟 Outstanding performance!</textarea></div>`;
+                div.innerHTML = `
+                    <h3><i class="fas fa-user-graduate"></i> ${name.toUpperCase()}</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div>
+                            <label>📚 Class Points:</label>
+                            <input type="number" id="${name}-classPoints" class="student-input" value="0">
+                        </div>
+                        <div>
+                            <label>🏆 Total Points:</label>
+                            <input type="number" id="${name}-totalPoints" class="student-input" value="0">
+                        </div>
+                        <div>
+                            <label>📝 Exam Marks:</label>
+                            <input type="number" id="${name}-examMarks" class="student-input" value="0">
+                        </div>
+                        <div>
+                            <label>🎯 Total Marks:</label>
+                            <input type="number" id="${name}-totalMarks" class="student-input" value="0">
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <label><i class="fas fa-bell"></i> Student Notice:</label>
+                        <textarea id="${name}-notice" rows="2" placeholder="Special notice for this student...">🌟 Outstanding performance! Keep it up!</textarea>
+                    </div>
+                `;
                 container.appendChild(div);
+                
+                // Load existing data from Firestore
                 db.collection('students').doc(name).get().then(doc => {
                     if (doc.exists) {
                         const data = doc.data();
-                        document.getElementById(`${name}-classPoints`).value = data.classPoints || 94;
-                        document.getElementById(`${name}-totalPoints`).value = data.totalPoints || 486;
-                        document.getElementById(`${name}-examMarks`).value = data.examMarks || 89;
-                        document.getElementById(`${name}-totalMarks`).value = data.totalMarks || 445;
-                        document.getElementById(`${name}-notice`).value = data.notice || '🌟 Outstanding performance!';
+                        document.getElementById(`${name}-classPoints`).value = data.classPoints || 0;
+                        document.getElementById(`${name}-totalPoints`).value = data.totalPoints || 0;
+                        document.getElementById(`${name}-examMarks`).value = data.examMarks || 0;
+                        document.getElementById(`${name}-totalMarks`).value = data.totalMarks || 0;
+                        document.getElementById(`${name}-notice`).value = data.notice || '🌟 Outstanding performance! Keep it up!';
                     }
                 });
             });
         }
         
-        function updateTotalStudents() { const val = document.getElementById('total-students-input').value; db.collection('settings').doc('general').set({ totalStudents: val }).then(()=>alert('Updated!')); }
-        function saveBatchStats() { const batchOp = db.batch(); ['301','302','303','304','305'].forEach(b=>{ const val=document.getElementById(`batch-${b}-value`).value, trend=document.getElementById(`batch-${b}-trend`).value; if(val) batchOp.set(db.collection('batchStats').doc(b),{batch:b,value:val,trend}); }); batchOp.commit().then(()=>alert('Batch stats updated!')); }
-        function saveLeadershipBoard() { const batchOp = db.batch(); db.collection('batchLeadership').get().then(snapshot=>{ snapshot.forEach(d=>batchOp.delete(d.ref)); ['301','302','303','304','305'].forEach(b=>{ const rank=parseInt(document.getElementById(`leadership-${b}-rank`).value)||5, value=document.getElementById(`leadership-${b}-value`).value||'0'; batchOp.set(db.collection('batchLeadership').doc(b),{batch:b,rank,value}); }); batchOp.commit().then(()=>{alert('Leadership updated!'); loadLeadershipAdmin();}); }); }
-        function saveMissionRank() { const batchOp = db.batch(); db.collection('missionRank').get().then(snapshot=>{ snapshot.forEach(d=>batchOp.delete(d.ref)); ['301','302','303','304','305'].forEach(b=>{ const rank=parseInt(document.getElementById(`mission-${b}-rank`).value)||5, total=parseInt(document.getElementById(`mission-${b}-total`).value)||0, success=parseInt(document.getElementById(`mission-${b}-success`).value)||0, failed=parseInt(document.getElementById(`mission-${b}-failed`).value)||0, highlighted=document.getElementById(`mission-${b}-highlight`).checked; batchOp.set(db.collection('missionRank').doc(b),{batch:b,rank,totalMissions:total,successMissions:success,failedMissions:failed,highlighted}); }); batchOp.commit().then(()=>{alert('Mission rank updated!'); loadMissionAdmin();}); }); }
-        function saveRanking() { const batchOp = db.batch(); for(let i=1;i<=10;i++){ const name=document.getElementById(`rank-${i}-name`).value, points=parseInt(document.getElementById(`rank-${i}-points`).value)||0; if(name) batchOp.set(db.collection('ranking').doc(`rank-${i}`),{name,points}); } batchOp.commit().then(()=>alert('Ranking updated!')); }
-        function saveNotice() { const content=document.getElementById('notice-input').value; db.collection('notices').doc('latest').set({content}).then(()=>alert('Notice updated!')); }
-        function saveAllStudents() { const batchOp = db.batch(); studentNames.forEach(name=>{ const data={ classPoints:parseInt(document.getElementById(`${name}-classPoints`).value)||0, totalPoints:parseInt(document.getElementById(`${name}-totalPoints`).value)||0, examMarks:parseInt(document.getElementById(`${name}-examMarks`).value)||0, totalMarks:parseInt(document.getElementById(`${name}-totalMarks`).value)||0, notice:document.getElementById(`${name}-notice`).value||'' }; batchOp.set(db.collection('students').doc(name),data); }); batchOp.commit().then(()=>{ alert('305 Batch students updated!'); db.collection('triggers').doc('update').set({timestamp:Date.now()}); }); }
+        function updateTotalStudents() { 
+            const val = document.getElementById('total-students-input').value; 
+            db.collection('settings').doc('general').set({ totalStudents: val })
+                .then(() => showToast('Total Students updated!'))
+                .catch(err => showToast('Error: ' + err.message, true));
+        }
         
+        function saveBatchStats() { 
+            const batchOp = db.batch(); 
+            ['301','302','303','304','305'].forEach(b=>{
+                const val=document.getElementById(`batch-${b}-value`).value; 
+                const trend=document.getElementById(`batch-${b}-trend`).value; 
+                if(val) batchOp.set(db.collection('batchStats').doc(b),{batch:b,value:val,trend}); 
+            }); 
+            batchOp.commit()
+                .then(() => showToast('Batch stats updated!'))
+                .catch(err => showToast('Error: ' + err.message, true));
+        }
+        
+        function saveLeadershipBoard() { 
+            const batchOp = db.batch(); 
+            db.collection('batchLeadership').get().then(snapshot=>{ 
+                snapshot.forEach(d=>batchOp.delete(d.ref)); 
+                ['301','302','303','304','305'].forEach(b=>{ 
+                    const rank=parseInt(document.getElementById(`leadership-${b}-rank`).value)||5; 
+                    const value=document.getElementById(`leadership-${b}-value`).value||'0'; 
+                    batchOp.set(db.collection('batchLeadership').doc(b),{batch:b,rank,value}); 
+                }); 
+                batchOp.commit()
+                    .then(()=>{showToast('Leadership updated!'); loadLeadershipAdmin();})
+                    .catch(err => showToast('Error: ' + err.message, true));
+            }); 
+        }
+        
+        function saveMissionRank() { 
+            const batchOp = db.batch(); 
+            db.collection('missionRank').get().then(snapshot=>{ 
+                snapshot.forEach(d=>batchOp.delete(d.ref)); 
+                ['301','302','303','304','305'].forEach(b=>{ 
+                    const rank=parseInt(document.getElementById(`mission-${b}-rank`).value)||5; 
+                    const total=parseInt(document.getElementById(`mission-${b}-total`).value)||0; 
+                    const success=parseInt(document.getElementById(`mission-${b}-success`).value)||0; 
+                    const failed=parseInt(document.getElementById(`mission-${b}-failed`).value)||0; 
+                    const highlighted=document.getElementById(`mission-${b}-highlight`).checked; 
+                    batchOp.set(db.collection('missionRank').doc(b),{batch:b,rank,totalMissions:total,successMissions:success,failedMissions:failed,highlighted}); 
+                }); 
+                batchOp.commit()
+                    .then(()=>{showToast('Mission rank updated!'); loadMissionAdmin();})
+                    .catch(err => showToast('Error: ' + err.message, true));
+            }); 
+        }
+        
+        function saveRanking() { 
+            const batchOp = db.batch(); 
+            for(let i=1;i<=10;i++){ 
+                const name=document.getElementById(`rank-${i}-name`).value; 
+                const points=parseInt(document.getElementById(`rank-${i}-points`).value)||0; 
+                if(name) batchOp.set(db.collection('ranking').doc(`rank-${i}`),{name,points}); 
+            } 
+            batchOp.commit()
+                .then(() => showToast('Ranking updated!'))
+                .catch(err => showToast('Error: ' + err.message, true));
+        }
+        
+        function saveNotice() { 
+            const content=document.getElementById('notice-input').value; 
+            db.collection('notices').doc('latest').set({content})
+                .then(() => showToast('Notice updated!'))
+                .catch(err => showToast('Error: ' + err.message, true));
+        }
+        
+        // Save all 7 students to Firestore
+        function saveAllStudents() { 
+            const batchOp = db.batch(); 
+            studentNames.forEach(name=>{ 
+                const data={ 
+                    classPoints: parseInt(document.getElementById(`${name}-classPoints`)?.value) || 0, 
+                    totalPoints: parseInt(document.getElementById(`${name}-totalPoints`)?.value) || 0, 
+                    examMarks: parseInt(document.getElementById(`${name}-examMarks`)?.value) || 0, 
+                    totalMarks: parseInt(document.getElementById(`${name}-totalMarks`)?.value) || 0, 
+                    notice: document.getElementById(`${name}-notice`)?.value || '' 
+                }; 
+                batchOp.set(db.collection('students').doc(name), data); 
+            }); 
+            batchOp.commit()
+                .then(()=>{ 
+                    showToast('✅ All 7 students updated! Real-time sync active!'); 
+                    db.collection('triggers').doc('update').set({timestamp: Date.now()}); 
+                })
+                .catch(err => showToast('Error: ' + err.message, true));
+        }
+        
+        // Auth state listener
         auth.onAuthStateChanged(user => {
             if (user) {
                 document.getElementById('admin-login').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
                 loadAdminData();
+                showToast('Welcome Admin!');
             } else {
                 document.getElementById('admin-panel').style.display = 'none';
                 document.getElementById('admin-login').style.display = 'block';

@@ -499,9 +499,6 @@
             'sayid hossain sayem', 
             'abu talha shamim', 
             'kamrul hassan sojib',
-            'md jafor ahmed',
-            'md pyiash',
-            'mosharof khan'
         ];
         
         function showToast(message, isError = false) {
@@ -668,7 +665,7 @@
         
         function loadBatchStatsAdmin() {
             const container = document.getElementById('batch-stats-admin');
-            const batches = ['301', '302', '303', '304', '305'];
+            const batches = ['302', '303', '304', '305','306',];
             let html = '';
             batches.forEach(b => {
                 html += `<div style="background:#1e293b; padding:15px; border-radius:12px;">
@@ -691,7 +688,7 @@
         
         function loadLeadershipAdmin() {
             const container = document.getElementById('leadership-admin');
-            const batches = ['301', '302', '303', '304', '305'];
+            const batches = ['302', '303', '304', '305','306',];
             let html = '';
             batches.forEach(batch => {
                 const is305 = batch === '305';
@@ -728,7 +725,7 @@
         
         function loadMissionAdmin() {
             const container = document.getElementById('mission-admin');
-            const batches = ['301', '302', '303', '304', '305'];
+            const batches = ['302', '303', '304', '305','306',];
             let html = '';
             batches.forEach(batch => {
                 const isHighlight = batch === '305';
@@ -856,7 +853,7 @@
         
         function saveBatchStats() { 
             const batchOp = db.batch(); 
-            ['301','302','303','304','305'].forEach(b=>{
+            ['302','303','304','305','306',].forEach(b=>{
                 const val=document.getElementById(`batch-${b}-value`).value; 
                 const trend=document.getElementById(`batch-${b}-trend`).value; 
                 if(val) batchOp.set(db.collection('batchStats').doc(b),{batch:b,value:val,trend}); 
@@ -870,7 +867,7 @@
             const batchOp = db.batch(); 
             db.collection('batchLeadership').get().then(snapshot=>{ 
                 snapshot.forEach(d=>batchOp.delete(d.ref)); 
-                ['301','302','303','304','305'].forEach(b=>{ 
+                ['302','303','304','305','306',].forEach(b=>{ 
                     const rank=parseInt(document.getElementById(`leadership-${b}-rank`).value)||5; 
                     const value=document.getElementById(`leadership-${b}-value`).value||'0'; 
                     batchOp.set(db.collection('batchLeadership').doc(b),{batch:b,rank,value}); 
@@ -885,7 +882,7 @@
             const batchOp = db.batch(); 
             db.collection('missionRank').get().then(snapshot=>{ 
                 snapshot.forEach(d=>batchOp.delete(d.ref)); 
-                ['301','302','303','304','305'].forEach(b=>{ 
+                ['302','303','304','305','306',].forEach(b=>{ 
                     const rank=parseInt(document.getElementById(`mission-${b}-rank`).value)||5; 
                     const total=parseInt(document.getElementById(`mission-${b}-total`).value)||0; 
                     const success=parseInt(document.getElementById(`mission-${b}-success`).value)||0; 
